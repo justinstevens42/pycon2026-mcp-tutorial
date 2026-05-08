@@ -1,9 +1,13 @@
 {
 	"servers": {
-		"hugging-face-server": {
-			"url": "https://huggingface.co/mcp",
+		"deepwiki": {
+			"url": "https://mcp.deepwiki.com/mcp",
 			"type": "http"
 		},
+		"github": {
+         "type": "http",
+         "url": "https://api.githubcopilot.com/mcp/"
+        },
         "product-store": {
             "type": "http",
             "url": "http://localhost:8420/mcp"

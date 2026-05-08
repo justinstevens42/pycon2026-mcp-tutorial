@@ -14,7 +14,7 @@ In this exercise, you'll write a Python script that creates an AI agent and conn
 
 ## Step 1: Set up an LLM connection
 
-Your agent needs access to an LLM that supports **tool calling**. Pick **one** of the providers below and create a `.env` file in the repo root with the required variables.
+Your agent needs access to an LLM that supports **tool calling**. Pick **one** of the providers below and create a `.env` file in the repo root. For all providers, use the same three variables: `LLM_BASE_URL`, `LLM_API_KEY`, and `LLM_MODEL_NAME`.
 
 ### Option 1: Ollama (local, no account needed)
 
@@ -30,17 +30,18 @@ Run a local LLM on your machine using [Ollama](https://ollama.com/). No API key 
 3. Add to your `.env`:
 
    ```text
-   API_HOST=ollama
-   OLLAMA_MODEL=gemma4:e4b
+     LLM_BASE_URL=http://localhost:11434/v1
+     LLM_API_KEY=ollama
+     LLM_MODEL_NAME=gemma4:e4b
    ```
 
-    If you're using the repository Dev Container, also add:
+        If you're using the repository Dev Container, change `LLM_BASE_URL` to:
 
     ```text
-    OLLAMA_ENDPOINT=http://host.docker.internal:11434/v1
+        LLM_BASE_URL=http://host.docker.internal:11434/v1
     ```
 
-> **Note:** Ollama runs entirely on your machine. A model like `gemma4:e4b` needs ~32 GB of RAM. If your machine has has less RAM, try `llama3.1:8b` instead.
+> **Note:** Ollama runs entirely on your machine. A model like `gemma4:e4b` needs ~32 GB of RAM. If your machine has less RAM, try `llama3.1:8b` instead.
 
 ### Option 2: OpenRouter
 
@@ -50,13 +51,12 @@ Run a local LLM on your machine using [Ollama](https://ollama.com/). No API key 
 2. Add to your `.env`:
 
    ```text
-   API_HOST=openai
-   OPENAI_API_KEY=<your OpenRouter API key>
-   OPENAI_BASE_URL=https://openrouter.ai/api/v1
-   OPENAI_MODEL=google/gemma-3-27b-it
+    LLM_BASE_URL=https://openrouter.ai/api/v1
+    LLM_API_KEY=<your OpenRouter API key>
+    LLM_MODEL_NAME=google/gemma-3-27b-it
    ```
 
-> **Tip:** OpenRouter uses the OpenAI-compatible API, so we set `API_HOST=openai` and override the base URL.
+> **Tip:** OpenRouter uses the OpenAI-compatible API, so this works with the same three `LLM_*` variables.
 
 ### Option 3: OpenAI
 
@@ -66,14 +66,12 @@ Use the [OpenAI API](https://platform.openai.com/) directly.
 2. Add to your `.env`:
 
    ```text
-   API_HOST=openai
-   OPENAI_API_KEY=<your OpenAI API key>
-   OPENAI_MODEL=gpt-5.4
+    LLM_BASE_URL=https://api.openai.com/v1
+    LLM_API_KEY=<your OpenAI API key>
+    LLM_MODEL_NAME=gpt-5.4
    ```
 
 ### Option 4: Azure OpenAI
-
-<!-- TODO: We may be able to provide shared Azure OpenAI keys for the tutorial. -->
 
 Use [Azure OpenAI Service](https://learn.microsoft.com/azure/ai-services/openai/).
 
@@ -81,21 +79,25 @@ Use [Azure OpenAI Service](https://learn.microsoft.com/azure/ai-services/openai/
 2. Add to your `.env`:
 
    ```text
-   API_HOST=azure
-   AZURE_OPENAI_ENDPOINT=<your endpoint>
-   AZURE_OPENAI_CHAT_DEPLOYMENT=<your deployment name>
-   AZURE_OPENAI_KEY=<your API key>
+    LLM_BASE_URL=<your endpoint>/openai/v1
+    LLM_API_KEY=<your API key>
+    LLM_MODEL_NAME=<your deployment name>
    ```
 
-### Verify your LLM connection
+### Option 5: GitHub Models
 
-Run a quick check to make sure your LLM is reachable (we'll use it in Step 2):
+Use [GitHub Models](https://github.com/marketplace/models) through its OpenAI-compatible endpoint.
 
-```bash
-uv run python -c "from dotenv import load_dotenv; load_dotenv(); print('Environment loaded OK')"
-```
+`GITHUB_TOKEN` is already set in this environment, so you can reference it directly from `.env`.
 
----
+1. Choose a model from the GitHub Models catalog (for example, `openai/gpt-4.1`).
+2. Add to your `.env`:
+
+    ```text
+    LLM_BASE_URL=https://models.inference.ai.azure.com
+    LLM_API_KEY=${GITHUB_TOKEN}
+    LLM_MODEL_NAME=openai/gpt-4.1
+    ```
 
 ## Step 2: Build an agent with MCP tools
 
@@ -110,20 +112,19 @@ import asyncio
 import os
 
 from agent_framework import Agent, MCPStreamableHTTPTool
-from agent_framework.openai import OpenAIChatClient
+from agent_framework.openai import OpenAIChatCompletionClient
 from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-# TODO: Configure the OpenAI client for your chosen provider.
-# For OpenAI:
-client = OpenAIChatClient(
-    api_key=os.environ["OPENAI_API_KEY"],
-    model=os.getenv("OPENAI_MODEL", "gpt-5.4"),
-)
-
 
 async def main():
+    client = OpenAIChatCompletionClient(
+        base_url=os.environ["LLM_BASE_URL"],
+        api_key=os.environ["LLM_API_KEY"],
+        model=os.environ["LLM_MODEL_NAME"],
+    )
+
     async with (
         MCPStreamableHTTPTool(
             name="________",  # TODO: Give the MCP server a name
@@ -132,11 +133,17 @@ async def main():
         Agent(
             client=client,
             name="DocsAgent",
-            instructions="You help answer questions using documentation.",
+            instructions=(
+                "You help answer questions using documentation. "
+                "Cite the DeepWiki sources you used at the end of your answer."
+            ),
             tools=[mcp_server],
         ) as agent,
     ):
-        result = await agent.run("What are the available hosting options for a Python web app on Azure?")
+        result = await agent.run(
+            "Consult the FastMCP Changelog and list the last 5 FastMCP releases "
+            "with release names and one highlight each."
+        )
         print(result.text)
 
 
@@ -146,8 +153,8 @@ if __name__ == "__main__":
 
 **What you need to fill in:**
 
-1. The `name` for the MCP tool (e.g. `"Microsoft Learn MCP"`)
-2. The `url` for the MCP server (use the Microsoft Learn URL from Exercise 1)
+1. The `name` for the MCP tool (e.g. `"DeepWiki MCP"`)
+2. The `url` for the MCP server (use the DeepWiki URL from Exercise 1)
 
 Run it:
 
@@ -164,25 +171,25 @@ Create `agents/exercise2_langchain.py` with this skeleton:
 ```python
 import asyncio
 import os
-from datetime import datetime
 
 from dotenv import load_dotenv
 from langchain.agents import create_agent
-from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.messages import HumanMessage
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langchain_openai import ChatOpenAI
+from pydantic import SecretStr
 
 load_dotenv(override=True)
 
-# TODO: Configure the ChatOpenAI model for your chosen provider.
-# For OpenAI:
-model = ChatOpenAI(
-    model=os.getenv("OPENAI_MODEL", "gpt-5.4"),
-    use_responses_api=True,
-)
-
 
 async def run_agent():
+    # TODO: Configure ChatOpenAI using LLM_* env vars.
+    model = ChatOpenAI(
+        model=os.environ["LLM_MODEL_NAME"],
+        base_url=os.environ["LLM_BASE_URL"],
+        api_key=SecretStr(os.environ["LLM_API_KEY"]),
+    )
+
     client = MultiServerMCPClient(
         {
             "________": {  # TODO: Set a server name
@@ -193,14 +200,24 @@ async def run_agent():
     )
 
     tools = await client.get_tools()
-    agent = create_agent(model, tools)
+    agent = create_agent(
+        model,
+        tools,
+        system_prompt=(
+            "Use DeepWiki tools for repository-grounded answers and "
+            "cite the DeepWiki sources you used at the end."
+        ),
+    )
 
-    today = datetime.now().strftime("%Y-%m-%d")
     response = await agent.ainvoke(
         {
             "messages": [
-                SystemMessage(content=f"Today's date is {today}."),
-                HumanMessage(content="What are the available hosting options for a Python web app on Azure?"),
+                HumanMessage(
+                    content=(
+                        "Consult the FastMCP Changelog and list the last 5 FastMCP "
+                        "releases with release names and one highlight each."
+                    )
+                ),
             ]
         }
     )
@@ -214,8 +231,8 @@ if __name__ == "__main__":
 
 **What you need to fill in:**
 
-1. The server name key in the `MultiServerMCPClient` dict (e.g. `"microsoft-learn"`)
-2. The `url` for the MCP server (use the Microsoft Learn URL from Exercise 1)
+1. The server name key in the `MultiServerMCPClient` dict (e.g. `"deepwiki"`)
+2. The `url` for the MCP server (use the DeepWiki URL from Exercise 1)
 
 Run it:
 
@@ -243,28 +260,36 @@ from pydantic_ai.providers.openai import OpenAIProvider
 
 load_dotenv(override=True)
 
-# TODO: Configure the OpenAI client for your chosen provider.
-# For OpenAI:
-openai_client = AsyncOpenAI(api_key=os.environ["OPENAI_API_KEY"])
-model = OpenAIChatModel(
-    os.getenv("OPENAI_MODEL", "gpt-5.4"),
-    provider=OpenAIProvider(openai_client=openai_client),
-)
-
-server = MCPServerStreamableHTTP(
-    url="________",  # TODO: Set the MCP server URL
-)
-
-agent: Agent[None, str] = Agent(
-    model,
-    system_prompt="You help answer questions using documentation.",
-    output_type=str,
-    toolsets=[server],
-)
-
 
 async def main():
-    result = await agent.run("What are the available hosting options for a Python web app on Azure?")
+    # TODO: Configure the OpenAI-compatible client using LLM_* env vars.
+    openai_client = AsyncOpenAI(
+        base_url=os.environ["LLM_BASE_URL"],
+        api_key=os.environ["LLM_API_KEY"],
+    )
+    model = OpenAIChatModel(
+        os.environ["LLM_MODEL_NAME"],
+        provider=OpenAIProvider(openai_client=openai_client),
+    )
+
+    server = MCPServerStreamableHTTP(
+        url="________",  # TODO: Set the MCP server URL
+    )
+
+    agent: Agent[None, str] = Agent(
+        model,
+        system_prompt=(
+            "You help answer questions using documentation. "
+            "Cite the DeepWiki sources you used at the end of your answer."
+        ),
+        output_type=str,
+        toolsets=[server],
+    )
+
+    result = await agent.run(
+        "Consult the FastMCP Changelog and list the last 5 FastMCP releases "
+        "with release names and one highlight each."
+    )
     print(result.output)
 
 
@@ -275,7 +300,7 @@ if __name__ == "__main__":
 
 **What you need to fill in:**
 
-1. The `url` for the MCP server (use the Microsoft Learn URL from Exercise 1)
+1. The `url` for the MCP server (use the DeepWiki URL from Exercise 1)
 
 Run it:
 
@@ -287,7 +312,7 @@ uv run agents/exercise2_pydanticai.py
 
 ## Try it out
 
-Once your agent works with the Microsoft Learn server, try changing the MCP server URL to connect to a different server, like the Hugging Face MCP server (`https://huggingface.co/mcp`), and ask it a question like "What are the most popular text generation models?"
+Once your agent works with the DeepWiki server, try changing the MCP server URL to connect to a different server, like the Hugging Face MCP server (`https://huggingface.co/mcp`), and ask it a question like "What are the most popular text generation models?"
 
 ## Full reference examples
 

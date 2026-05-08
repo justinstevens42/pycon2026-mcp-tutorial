@@ -19,7 +19,7 @@ Everything is pre-configured — no local installs needed. You just need a [GitH
 
 1. Go to [github.com/pamelafox/pycon2026-mcp-tutorial](https://github.com/pamelafox/pycon2026-mcp-tutorial).
 2. Click **Code → Codespaces → Create codespace on main**.
-3. Wait for the Codespace to build. Once the editor loads, you're ready to go!
+3. Wait for the Codespace to build. Once the editor loads, you're ready to move on to [Step 2](#step-2-set-up-a-coding-agent).
 
 ### Option B: VS Code + Dev Containers
 
@@ -46,7 +46,7 @@ This runs the same pre-configured environment locally inside a Docker container.
    ```
 
 3. When prompted "Reopen in Container", click **Reopen in Container**. (Or open the Command Palette and run **Dev Containers: Reopen in Container**.)
-4. Wait for the container to build. Once the editor reloads, you're ready to go!
+4. Wait for the container to build. Once the editor reloads, you're ready to move on to [Step 2](#step-2-set-up-a-coding-agent).
 
 ### Option C: Local environment
 
@@ -72,31 +72,25 @@ If you prefer to work without Docker or Codespaces, you can set up a local Pytho
    uv sync
    ```
 
-3. Open the folder in your editor of choice (VS Code, PyCharm, etc.).
-
-### Verify your setup
-
-From the terminal in your environment, run:
-
-```bash
-python --version
-```
-
-You should see Python 3.12 or later.
+3. Open the folder in your editor of choice (VS Code, PyCharm, etc.). Once the editor loads, you're ready to move on to [Step 2](#step-2-set-up-a-coding-agent).
 
 ---
 
 ## Step 2: Set up a coding agent
 
-Pick **one** of the coding agents below. You'll use this agent for the rest of the exercise.
+Set up **one** of the coding agents from instructions below, either [GitHub Copilot in VS Code](#option-a-github-copilot-in-vs-code), [GitHub Copilot CLI](#option-b-github-copilot-cli), or [Claude Code](#option-c-claude-code). You are welcome to use another MCP-compatible coding agent if you have one installed, but agents vary in how fully they support MCP features, so you may encounter issues.
 
 ### Option A: GitHub Copilot in VS Code
 
-1. Make sure the [GitHub Copilot extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) is installed (it's pre-installed in Codespaces).
-2. Sign in to your GitHub account if prompted.
-3. Open the Copilot Chat panel and switch to **Agent** mode.
+1. Make sure the [GitHub Copilot extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) is installed. If you opened this project in Codespaces, the extension is pre-installed.
+2. At the top of VS Code, locate and click the Toggle Chat icon to open a Copilot Chat side panel.
+  ![Screenshot of "Toggle chat" icon in top right](screenshot_copilot_togglechat.png)
 
-> **Tip:** If you're using GitHub Codespaces, Copilot is already available in the browser — no extra setup needed.
+   > 🪧 **Note:** If this is your first time using GitHub Copilot, you will need to accept the usage terms to continue.
+
+3. Make sure the chat is in **Agent** mode.
+
+   ![Screenshot of chat box with "Agent" mode selected](screenshot_copilot_agent.png)
 
 ### Option B: GitHub Copilot CLI
 
@@ -117,16 +111,10 @@ Pick **one** of the coding agents below. You'll use this agent for the rest of t
 2. Verify the installation:
 
    ```bash
-   claude --version
+   claude
    ```
 
 For more details on MCP in Claude Code, see the [Claude Code MCP docs](https://code.claude.com/docs/en/mcp).
-
-### Option D: Goose
-
-<!-- TODO: Add Goose instructions — still figuring out MCP server configuration for Goose. -->
-
-Coming soon!
 
 ---
 
@@ -136,57 +124,50 @@ Now connect your coding agent to a **public MCP server** that requires no authen
 
 | Server | MCP Server URL | Description |
 | --- | --- | --- |
-| [Microsoft Learn](https://learn.microsoft.com/en-us/training/support/mcp) | `https://learn.microsoft.com/api/mcp` | MS Learn documentation |
-| [Hugging Face](https://huggingface.co/settings/mcp) | `https://huggingface.co/mcp` | HuggingFace articles and generators |
+| [DeepWiki](https://docs.devin.ai/work-with-devin/deepwiki-mcp) | `https://mcp.deepwiki.com/mcp` | GitHub repository documentation |
+| [Microsoft Learn](https://learn.microsoft.com/training/support/mcp) | `https://learn.microsoft.com/api/mcp` | MS Learn documentation |
 | [French government](https://github.com/datagouv/datagouv-mcp) | `https://mcp.data.gouv.fr/mcp` | French government data |
 
 Follow the instructions for your agent:
 
 ### Copilot in VS Code — public server
 
-1. Open (or create) the file `.vscode/mcp.json` in your workspace and add:
+1. Open (or create) the file `.vscode/mcp.json` in your workspace and make sure it contains a server configuration pointed at the remote MCP server URL:
+
 
    ```json
    {
      "servers": {
-       "microsoft-learn": {
+       "deepwiki": {
          "type": "http",
-         "url": "https://learn.microsoft.com/api/mcp"
+         "url": "https://mcp.deepwiki.com/mcp"
        }
      }
    }
    ```
 
-2. In the Copilot Chat panel (Agent mode), click the tools icon (🔧) to confirm the Microsoft Learn tools are listed.
-3. Ask a question:
+2. In the Copilot Chat panel, click the tools icon (🔧) to confirm the server tools are listed.
 
-   > What is the Model Context Protocol?
+   ![Screenshot of tools listing for remote-mcp-server](screenshot_copilot_tools.png)
+
+3. Ask a question that can be answered by the MCP server:
+
+   > Explain how PrefectHQ/fastmcp handles tool registration internally.
 
 4. Approve the MCP tool call and review the grounded answer.
 
 ### Copilot CLI — public server
 
-1. Open your MCP config file:
-   - **macOS / Linux:** `~/.copilot/mcp-config.json`
-   - **Windows:** `C:\Users\<USERNAME>\.copilot\mcp-config.json`
-
-2. Add (or merge) the following:
-
-   ```json
-   {
-     "mcpServers": {
-       "microsoft-learn": {
-         "type": "http",
-         "url": "https://learn.microsoft.com/api/mcp"
-       }
-     }
-   }
-   ```
-
-3. Query the server:
+1. Add the MCP server using the CLI:
 
    ```bash
-   copilot -i "What is the Model Context Protocol?"
+   copilot mcp add --transport http deepwiki https://mcp.deepwiki.com/mcp
+   ```
+
+2. Ask a question that can be answered by the MCP server:
+
+   ```bash
+   copilot -i "Explain how PrefectHQ/fastmcp handles tool registration internally."
    ```
 
 ### Claude Code — public server
@@ -194,7 +175,7 @@ Follow the instructions for your agent:
 1. Add the server:
 
    ```bash
-   claude mcp add --transport http microsoft-learn https://learn.microsoft.com/api/mcp
+   claude mcp add --transport http deepwiki https://mcp.deepwiki.com/mcp
    ```
 
 2. Verify it was added:
@@ -203,29 +184,29 @@ Follow the instructions for your agent:
    claude mcp list
    ```
 
-3. Ask a question:
+3. Ask a question that can be answered by the MCP server:
 
-   ```text
-   What is the Model Context Protocol?
+   ```bash
+   claude "Use the deepwiki MCP server to explain how PrefectHQ/fastmcp handles tool registration internally."
    ```
+
+   Note that we specifically mentioned the MCP server in this question, as Claude has a built-in web search tool that it tries to use instead.
 
 ---
 
 ## Step 4: Use an authenticated MCP server (GitHub)
 
-The [GitHub MCP server](https://github.com/github/github-mcp-server) requires authentication — your agent will go through an OAuth login flow to access it.
+> You need a [GitHub account](https://github.com) for this step. If you do not have one, you can try other [remote servers that require OAuth](https://mcpservers.org/remote-mcp-servers).
+
+The [GitHub MCP server](https://github.com/github/github-mcp-server) requires authentication. When you start the server, your coding agent will take you through an OAuth login flow.
 
 ### Copilot in VS Code — GitHub server
 
-1. Add the GitHub MCP server to `.vscode/mcp.json`:
+1. Make sure that `.vscode/mcp.json` contains a server configuration pointed at the GitHub MCP server URL:
 
    ```json
    {
      "servers": {
-       "microsoft-learn": {
-         "type": "http",
-         "url": "https://learn.microsoft.com/api/mcp"
-       },
        "github": {
          "type": "http",
          "url": "https://api.githubcopilot.com/mcp/"
@@ -234,34 +215,34 @@ The [GitHub MCP server](https://github.com/github/github-mcp-server) requires au
    }
    ```
 
-2. Click the tools icon (🔧) and confirm the GitHub tools appear. You may be prompted to authenticate — follow the browser login flow.
+2. Select "Start" on the server in the config file. 
+
+   ![Screenshot of Start button in config file](screenshot_copilot_github_start.png)
+
+3. A prompt will pop-up that asks you to authenticate. Follow that flow.
+
+   ![Screenshot of prompt to auth to GitHub MCP server](screenshot_copilot_github_auth.png)
+
+4. Click the tools icon (🔧) and confirm the GitHub tools are listed and enabled. 
+
+   ![Screenshot of GitHub MCP server tools listing](screenshot_copilot_github_tools.png)
+
 3. Ask Copilot a question that uses GitHub context:
 
-   > What are the open issues in pamelafox/pycon2026-mcp-tutorial?
+   > What are the top 5 open issues in PrefectHQ/fastmcp?
 
 ### Copilot CLI — GitHub server
 
-1. Add the GitHub server to `~/.copilot/mcp-config.json`:
+1. Add the GitHub MCP server using the CLI:
 
-   ```json
-   {
-     "mcpServers": {
-       "microsoft-learn": {
-         "type": "http",
-         "url": "https://learn.microsoft.com/api/mcp"
-       },
-       "github": {
-         "type": "http",
-         "url": "https://api.githubcopilot.com/mcp/"
-       }
-     }
-   }
+   ```bash
+   copilot mcp add --transport http github https://api.githubcopilot.com/mcp/
    ```
 
 2. Query the server:
 
    ```bash
-   copilot -i "What are the open issues in pamelafox/pycon2026-mcp-tutorial?"
+   copilot -i "What are the top 5 open issues in PrefectHQ/fastmcp?"
    ```
 
 3. Follow the authentication prompt if required.
@@ -278,5 +259,5 @@ The [GitHub MCP server](https://github.com/github/github-mcp-server) requires au
 3. Ask a question:
 
    ```text
-   What are the open issues in pamelafox/pycon2026-mcp-tutorial?
+   claude "What are the top 5 open issues in PrefectHQ/fastmcp?"
    ```

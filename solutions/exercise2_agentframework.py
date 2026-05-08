@@ -2,49 +2,38 @@ import asyncio
 import os
 
 from agent_framework import Agent, MCPStreamableHTTPTool
-from agent_framework.openai import OpenAIChatClient
+from agent_framework.openai import OpenAIChatCompletionClient
 from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-API_HOST = os.getenv("API_HOST", "azure")
-
-if API_HOST == "azure":
-    client = OpenAIChatClient(
-        base_url=f"{os.environ['AZURE_OPENAI_ENDPOINT']}/openai/v1/",
-        api_key=os.environ["AZURE_OPENAI_KEY"],
-        model=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"],
-    )
-elif API_HOST == "ollama":
-    client = OpenAIChatClient(
-        base_url=os.environ.get("OLLAMA_ENDPOINT", "http://localhost:11434/v1"),
-        api_key=os.getenv("OLLAMA_API_KEY", "no-key-needed"),
-        model=os.environ.get("OLLAMA_MODEL", "gemma4:e4b"),
-    )
-elif API_HOST == "openai":
-    client = OpenAIChatClient(
-        api_key=os.environ["OPENAI_API_KEY"],
-        base_url=os.getenv("OPENAI_BASE_URL"),
-        model=os.getenv("OPENAI_MODEL", "gpt-5.4"),
-    )
-else:
-    raise ValueError(f"Unsupported API_HOST '{API_HOST}'. Use one of: azure, ollama, openai.")
-
 
 async def main():
+    client = OpenAIChatCompletionClient(
+        base_url=os.environ["LLM_BASE_URL"],
+        api_key=os.environ["LLM_API_KEY"],
+        model=os.environ["LLM_MODEL_NAME"],
+    )
+
     async with (
         MCPStreamableHTTPTool(
-            name="Microsoft Learn MCP",
-            url="https://learn.microsoft.com/api/mcp",
+            name="DeepWiki MCP",
+            url="https://mcp.deepwiki.com/mcp",
         ) as mcp_server,
         Agent(
             client=client,
             name="DocsAgent",
-            instructions="You help answer questions using documentation.",
+            instructions=(
+                "You help answer questions using documentation. "
+                "Cite the DeepWiki sources you used at the end of your answer."
+            ),
             tools=[mcp_server],
         ) as agent,
     ):
-        result = await agent.run("What are the available hosting options for a Python web app on Azure?")
+        result = await agent.run(
+            "Consult the FastMCP Changelog and list the last 5 FastMCP releases "
+            "with release names and one highlight each."
+        )
         print(result.text)
 
 

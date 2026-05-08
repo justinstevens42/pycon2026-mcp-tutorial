@@ -74,10 +74,13 @@ I can come up with fallback strategies for each requirement. The fallback may in
 
 ## TODOs
 
+- Make slides
+- Figure out how to add GitHub MPC with auth to Claude Code
+- Add GitHub Models support to exercise2
 - Set up an Azure OpenAI proxy server so that I can give people keys
 - Set up a server running Ollama? (serverless GPUs?)
 - Buy a mobile wifi hotspot? (Gwen may have one)
-- Put stuff on USB sticks
+- Put stuff on USB sticks - ollama model, keycloak
 - Pin FastMCP version that includes built-in KeycloakAuthProvider (merged in [PR #1937](https://github.com/PrefectHQ/fastmcp/pull/1937))
 - Deploy keycloak server to Azure Container Apps, also run it off local network
 

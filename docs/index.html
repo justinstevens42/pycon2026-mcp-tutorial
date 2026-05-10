@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Build your first MCP server in Python</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/a11y-light.min.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Chewy&display=swap">
+		<style>
+		:root {
+			--deck-ink: #fff7fb;
+			--deck-heading: #ffffff;
+			--deck-page: #190064;
+			--deck-panel: rgba(23, 6, 70, 0.84);
+			--deck-panel-strong: rgba(10, 3, 36, 0.9);
+			--deck-border: rgba(255, 255, 255, 0.32);
+			--deck-muted: #f8c7ff;
+			--deck-accent: #21e8f3;
+			--deck-pink: #ff32c8;
+			--deck-gold: #ffd66b;
+			--deck-shadow: rgba(255, 50, 200, 0.35);
+		}
+
+		html,
+		body {
+			background: var(--deck-page);
+		}
+
+		.reveal {
+			background:
+				radial-gradient(circle at 15% 14%, rgba(255, 255, 255, 0.85) 0 2px, transparent 3px),
+				radial-gradient(circle at 82% 17%, rgba(255, 255, 255, 0.75) 0 2px, transparent 3px),
+				radial-gradient(circle at 92% 44%, rgba(255, 255, 255, 0.65) 0 2px, transparent 3px),
+				radial-gradient(circle at 24% 34%, rgba(255, 214, 107, 0.75) 0 2px, transparent 3px),
+				linear-gradient(180deg, #2b0eb0 0%, #4817c4 34%, #b113ce 68%, #ff42c5 100%);
+			font-family: 'Atkinson Hyperlegible', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+			color: var(--deck-ink);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.reveal::before {
+			display: none;
+		}
+
+		.reveal::after {
+			display: none;
+		}
+
+		.reveal .slides {
+			position: relative;
+			z-index: 1;
+		}
+
+		.reveal .controls,
+		.reveal .slide-number,
+		.reveal .progress,
+		.reveal .speaker-notes {
+			z-index: 5;
+		}
+
+		.reveal .slides section {
+			text-align: left;
+			padding: 34px 56px 112px;
+			box-sizing: border-box;
+		}
+
+		.reveal .slides section > h3:first-child,
+		.reveal .slides section > h2:first-child {
+			margin-top: 0;
+		}
+
+		.reveal h1,
+		.reveal h2,
+		.reveal h3 {
+			font-family: 'Chewy', system-ui, sans-serif;
+			color: var(--deck-heading);
+			background: none;
+			display: block;
+			padding: 6px 0;
+			text-transform: none;
+			letter-spacing: normal;
+			font-weight: 400;
+			-webkit-text-stroke: 0;
+			text-shadow: 0 0 14px rgba(255, 50, 200, 0.45), 0 2px 0 rgba(0, 0, 0, 0.38);
+		}
+
+		.reveal h1 { font-size: 1.9em; }
+		.reveal h2 { font-size: 1.72em; }
+		.reveal h3 { font-size: 1.46em; }
+
+		.reveal h3::after {
+			content: "";
+			display: block;
+			width: 118px;
+			height: 16px;
+			margin-top: 8px;
+			background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 16' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='rainbow' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%2321e8f3'/%3E%3Cstop offset='0.55' stop-color='%23ff32c8'/%3E%3Cstop offset='1' stop-color='%23ffd66b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M2 8 C 10 1, 18 1, 26 8 S 42 15, 50 8 S 66 1, 74 8 S 90 15, 98 8 S 112 1, 118 8' fill='none' stroke='url(%23rainbow)' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+			filter: drop-shadow(0 0 8px var(--deck-shadow));
+		}
+
+		.reveal p,
+		.reveal li,
+		.reveal td,
+		.reveal th {
+			font-size: 0.9em;
+			line-height: 1.38;
+		}
+
+		.reveal a,
+		.reveal a:hover,
+		.reveal a:visited {
+			color: var(--deck-accent);
+			text-decoration: revert;
+		}
+
+		.reveal strong {
+			color: var(--deck-heading);
+		}
+
+		.reveal code {
+			font-size: 0.84em;
+			padding: 0.08em 0.26em;
+			border-radius: 0.3em;
+			background: rgba(255, 255, 255, 0.16);
+			color: #fff8bf;
+		}
+
+		.reveal pre code {
+			padding: 0;
+			background: transparent;
+			font-size: 0.86em;
+			line-height: 1.35;
+			color: #10101a;
+		}
+
+		.reveal pre {
+			width: 100%;
+			max-width: none;
+			margin: 0;
+			padding: 12px 16px;
+			box-sizing: border-box;
+			border: 2px solid rgba(33, 232, 243, 0.8);
+			border-radius: 8px;
+			background: #fffaf1;
+			box-shadow: 0 0 22px rgba(33, 232, 243, 0.22), 0 12px 28px rgba(0, 0, 0, 0.24);
+		}
+
+		.reveal table {
+			font-size: 0.74em;
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+		.reveal th,
+		.reveal td {
+			border: 1px solid var(--deck-border);
+			padding: 0.42em 0.55em;
+		}
+
+		.reveal th {
+			font-weight: 700;
+			background: rgba(255, 50, 200, 0.24);
+		}
+
+		.reveal tbody tr:nth-child(even) {
+			background: rgba(255, 255, 255, 0.06);
+		}
+
+		.no-code-badge .code-badge {
+			display: none;
+		}
+
+		.reveal ul.tight li,
+		.reveal ol.tight li {
+			margin-bottom: 0.28em;
+		}
+
+		.reveal .lead {
+			font-size: 0.9em;
+			max-width: 900px;
+		}
+
+		.reveal .muted {
+			color: var(--deck-muted);
+		}
+
+		.reveal .lead,
+		.reveal section:not(.heading-only) > p,
+		.reveal section:not(.heading-only) > ul,
+		.reveal section:not(.heading-only) > ol,
+		.reveal section:not(.heading-only) > table,
+		.reveal section:not(.heading-only) > .two-column,
+		.reveal section:not(.heading-only) > .three-column,
+		.reveal section:not(.heading-only) > .callout {
+			position: relative;
+			z-index: 1;
+		}
+
+		.reveal .two-column {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 32px;
+			align-items: start;
+		}
+
+		.reveal .three-column {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 22px;
+			align-items: start;
+		}
+
+		.reveal .box {
+			border: 1px solid rgba(33, 232, 243, 0.48);
+			border-radius: 8px;
+			padding: 18px 20px;
+			min-height: 180px;
+			box-sizing: border-box;
+			background: var(--deck-panel);
+			box-shadow: 0 0 22px rgba(33, 232, 243, 0.16);
+		}
+
+		.reveal .box h4 {
+			font-size: 0.9em;
+			margin: 0 0 0.45em;
+		}
+
+		.reveal .box p,
+		.reveal .box li {
+			font-size: 0.72em;
+		}
+
+		.reveal .callout {
+			border-left: 8px solid var(--deck-accent);
+			padding: 12px 20px;
+			background: rgba(0, 0, 0, 0.34);
+			box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+			font-size: 0.9em;
+		}
+
+		.reveal section:not(.heading-only)::before {
+			content: "";
+			position: absolute;
+			inset: 22px 34px 94px;
+			border-radius: 14px;
+			background: var(--deck-panel-strong);
+			border: 1px solid rgba(255, 255, 255, 0.22);
+			box-shadow: 0 22px 60px rgba(0, 0, 0, 0.28), inset 0 0 42px rgba(255, 50, 200, 0.08);
+			z-index: 0;
+		}
+
+		.reveal section:not(.heading-only) > h2,
+		.reveal section:not(.heading-only) > h3,
+		.reveal section:not(.heading-only) > pre {
+			position: relative;
+			z-index: 1;
+		}
+
+		.reveal section.heading-only {
+			display: flex !important;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			height: 100%;
+			min-height: 720px;
+			padding: 0 72px 112px;
+			box-sizing: border-box;
+			background: transparent;
+		}
+
+		.reveal section.heading-only h1,
+		.reveal section.heading-only h2,
+		.reveal section.heading-only h3,
+		.reveal section.heading-only p,
+		.reveal section.heading-only li {
+			color: #fff;
+			text-shadow: 0 0 18px rgba(255, 50, 200, 0.62), 0 4px 0 rgba(0, 0, 0, 0.38);
+		}
+
+		.reveal section.heading-only h1::after,
+		.reveal section.heading-only h2::after,
+		.reveal section.heading-only h3::after {
+			content: "";
+			display: block;
+			width: 118px;
+			height: 16px;
+			margin: 18px auto 0;
+			background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 16' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='rainbow' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%2321e8f3'/%3E%3Cstop offset='0.55' stop-color='%23ff32c8'/%3E%3Cstop offset='1' stop-color='%23ffd66b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M2 8 C 10 1, 18 1, 26 8 S 42 15, 50 8 S 66 1, 74 8 S 90 15, 98 8 S 112 1, 118 8' fill='none' stroke='url(%23rainbow)' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+			filter: drop-shadow(0 0 8px rgba(255, 50, 200, 0.55));
+		}
+
+		.reveal section.heading-only h3::after {
+			display: none;
+		}
+
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section class="heading-only">
+					<p>PyCon 2026 Tutorial</p>
+					<h1>Build your first MCP server in Python</h1>
+					<p style="font-size: 0.9em; max-width: 820px; margin-top: 16px;">Use FastMCP to build, test, extend, and secure a Python MCP server that real AI clients can call.</p>
+					<h3 style="margin-top: 42px;">Pamela Fox</h3>
+					<p style="font-size: 0.72em; opacity: 0.92; display: none;">github.com/pamelafox/pycon2026-mcp-tutorial</p>
+					<aside class="notes">
+						Set the expectation that this is a hands-on workshop. The goal is not just to understand MCP, but to leave with running code.
+					</aside>
+				</section>
+
+				<section>
+					<h3>What we will build</h3>
+					<p class="lead">A local product-store MCP server that starts simple, then gains UI, elicitation, and OAuth-based authentication.</p>
+					<ul class="tight">
+						<li>Connect agents to existing MCP servers.</li>
+						<li>Use MCP tools from Python agent frameworks.</li>
+						<li>Build a FastMCP server with tools, prompts, and resources.</li>
+						<li>Test with coding agents, MCP Inspector, and MCPJam.</li>
+						<li>Add Keycloak-backed OAuth 2.1 authentication.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Session shape</h3>
+					<table>
+						<thead>
+							<tr><th>Part</th><th>Time</th><th>Exercise</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>MCP 101</td><td>30 min</td><td>Use popular MCP servers</td></tr>
+							<tr><td>Agents + MCP</td><td>20 min</td><td>Code a Python agent</td></tr>
+							<tr><td>Build an MCP server</td><td>45 min</td><td>Write, run, and modify a server</td></tr>
+							<tr><td>Advanced server features</td><td>20 min</td><td>Add UI or elicitation</td></tr>
+							<tr><td>Authenticated servers</td><td>45 min</td><td>Add Keycloak auth</td></tr>
+							<tr><td>Next steps</td><td>10 min</td><td>Deployment and security</td></tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section>
+					<h3>Before we start</h3>
+					<div class="three-column">
+						<div class="box">
+							<h4>Best path</h4>
+							<p>Open the repo in GitHub Codespaces. The environment is already configured.</p>
+						</div>
+						<div class="box">
+							<h4>Local container</h4>
+							<p>Use VS Code, Docker Desktop, and Dev Containers for the same setup locally.</p>
+						</div>
+						<div class="box">
+							<h4>Local Python</h4>
+							<p>Use Python 3.12+ and <code>uv sync</code> if you prefer your own environment.</p>
+						</div>
+					</div>
+					<aside class="notes">
+						Make sure participants are in the repository before moving into Exercise 1. Have helpers scan the room for environment issues.
+					</aside>
+				</section>
+
+				<section class="heading-only">
+					<h2>MCP 101</h2>
+					<p style="font-size: 0.86em; max-width: 720px;">A common protocol for giving AI applications tools, context, and workflows.</p>
+				</section>
+
+				<section>
+					<h3>Why MCP exists</h3>
+					<p class="lead">AI apps need a repeatable way to discover and call external capabilities without every integration becoming a one-off plugin.</p>
+					<ul class="tight">
+						<li><strong>Clients</strong> connect to servers and expose capabilities to the model.</li>
+						<li><strong>Servers</strong> publish tools, resources, prompts, and optional apps.</li>
+						<li><strong>Hosts</strong> are the applications people use: editors, chat apps, agents, and CLIs.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>The basic request flow</h3>
+					<ol class="tight">
+						<li>The host starts or connects to an MCP server.</li>
+						<li>The client asks the server what it supports.</li>
+						<li>The model chooses a tool, resource, or prompt when it needs one.</li>
+						<li>The user approves calls when the host requires confirmation.</li>
+						<li>The server returns structured results for the model to use.</li>
+					</ol>
+				</section>
+
+				<section>
+					<h3>Core building blocks</h3>
+					<div class="three-column">
+						<div class="box">
+							<h4>Tools</h4>
+							<p>Actions the model can call, such as searching docs, buying a product, or filing an issue.</p>
+						</div>
+						<div class="box">
+							<h4>Resources</h4>
+							<p>Readable context, such as files, inventory, database records, or generated documents.</p>
+						</div>
+						<div class="box">
+							<h4>Prompts</h4>
+							<p>Reusable prompt templates that help clients start useful model interactions.</p>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h3>Exercise 1: connect to existing servers</h3>
+					<p class="lead">Use a coding agent to connect to public MCP servers, then try one authenticated MCP server.</p>
+					<table>
+						<thead>
+							<tr><th>Server</th><th>URL</th><th>Use case</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>DeepWiki</td><td><code>https://mcp.deepwiki.com/mcp</code></td><td>Repository documentation</td></tr>
+							<tr><td>Microsoft Learn</td><td><code>https://learn.microsoft.com/api/mcp</code></td><td>Microsoft docs</td></tr>
+							<tr><td>GitHub</td><td>Configured by client</td><td>Authenticated repo workflows</td></tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section class="no-code-badge">
+					<h3>Copilot MCP configuration</h3>
+					<pre><code class="language-json" data-trim data-noescape>
+{
+  "servers": {
+    "deepwiki": {
+      "type": "http",
+      "url": "https://mcp.deepwiki.com/mcp"
+    }
+  }
+}
+					</code></pre>
+					<p class="muted">Then ask: "Explain how PrefectHQ/fastmcp handles tool registration internally."</p>
+				</section>
+
+				<section class="heading-only">
+					<h2>Agents + MCP</h2>
+					<p style="font-size: 0.86em; max-width: 760px;">Now the agent code becomes the MCP client.</p>
+				</section>
+
+				<section>
+					<h3>What is an agent framework?</h3>
+					<p class="lead">An agent framework coordinates model calls, tool schemas, tool execution, memory or state, and final responses.</p>
+					<div class="two-column">
+						<div>
+							<p><strong>The model decides</strong></p>
+							<ul class="tight">
+								<li>When it needs a tool</li>
+								<li>Which arguments to send</li>
+								<li>How to use the result</li>
+							</ul>
+						</div>
+						<div>
+							<p><strong>The framework manages</strong></p>
+							<ul class="tight">
+								<li>Tool registration</li>
+								<li>Async execution</li>
+								<li>Retries and final output</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h3>Exercise 2: choose one framework</h3>
+					<table>
+						<thead>
+							<tr><th>Option</th><th>What you will wire up</th><th>Good for</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>Pydantic AI</td><td><code>MCPServerStreamableHTTP</code></td><td>Typed Python agents</td></tr>
+							<tr><td>LangChain v1</td><td><code>MultiServerMCPClient</code></td><td>Broad ecosystem support</td></tr>
+							<tr><td>Microsoft Agent Framework</td><td>MCP tool integration</td><td>.NET and Python agent apps</td></tr>
+						</tbody>
+					</table>
+					<aside class="notes">
+						This is the first part most likely to be affected by LLM provider setup. Keep it focused and be ready to turn it into a bonus section if network or key setup drags.
+					</aside>
+				</section>
+
+				<section class="no-code-badge">
+					<h3>Shared LLM environment</h3>
+					<pre><code class="language-text" data-trim data-noescape>
+LLM_BASE_URL=https://openrouter.ai/api/v1
+LLM_API_KEY=&lt;your API key&gt;
+LLM_MODEL_NAME=google/gemma-3-27b-it
+					</code></pre>
+					<p class="muted">The same three variables work across the exercise options.</p>
+				</section>
+
+				<section class="heading-only">
+					<h2>Build an MCP server</h2>
+					<p style="font-size: 0.86em; max-width: 760px;">FastMCP gives us a compact Python API for tools, resources, prompts, and transports.</p>
+				</section>
+
+				<section>
+					<h3>FastMCP server skeleton</h3>
+					<pre><code class="language-python" data-trim data-noescape>
+from fastmcp import FastMCP
+
+mcp = FastMCP("Pamela's Bakery")
+
+INVENTORY = {
+    "Croissant": {"price": 3.50, "quantity": 40},
+    "Sourdough Loaf": {"price": 7.00, "quantity": 20},
+    "Cinnamon Roll": {"price": 4.25, "quantity": 30},
+}
+
+if __name__ == "__main__":
+    mcp.run(transport="streamable-http", host="0.0.0.0", port=8420)
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Turn Python functions into MCP tools</h3>
+					<pre><code class="language-python" data-trim data-noescape>
+from typing import Annotated
+
+@mcp.tool
+async def buy_product(
+    product_name: Annotated[str, "Name of the product to buy"],
+    quantity: Annotated[int, "Number of items to buy"],
+) -&gt; str:
+    """Buy a product from the store, reducing its inventory."""
+    if product_name not in INVENTORY:
+        return f"Error: '{product_name}' not found."
+
+    product = INVENTORY[product_name]
+    if product["quantity"] &lt; quantity:
+        return "Error: Not enough stock."
+
+    product["quantity"] -= quantity
+    return f"Bought {quantity}x {product_name}."
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Run and test the server</h3>
+					<div class="two-column">
+						<div>
+							<p><strong>Start it</strong></p>
+							<pre><code class="language-bash" data-trim>uv run servers/store_server.py</code></pre>
+							<p class="muted">Server URL: <code>http://localhost:8420/mcp</code></p>
+						</div>
+						<div>
+							<p><strong>Inspect it</strong></p>
+							<pre><code class="language-bash" data-trim>npx @modelcontextprotocol/inspector</code></pre>
+							<p class="muted">MCPJam is another friendly local tester.</p>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h3>Exercise 3: product-store server</h3>
+					<ol class="tight">
+						<li>Create <code>servers/store_server.py</code>.</li>
+						<li>Choose a store theme and inventory.</li>
+						<li>Add <code>list_products</code>.</li>
+						<li>Add <code>buy_product</code>.</li>
+						<li>Test with a coding agent, MCP Inspector, and MCPJam.</li>
+					</ol>
+					<p class="callout">The useful debugging loop: direct server logs first, Inspector second, LLM client last.</p>
+				</section>
+
+				<section class="heading-only">
+					<h2>Advanced server features</h2>
+					<p style="font-size: 0.86em; max-width: 760px;">MCP servers can do more than return plain strings.</p>
+				</section>
+
+				<section>
+					<h3>Beyond basic tools</h3>
+					<div class="two-column">
+						<div>
+							<ul class="tight">
+								<li><strong>Apps:</strong> Render UI in capable hosts.</li>
+								<li><strong>Elicitation:</strong> Ask the user for structured input mid-tool call.</li>
+								<li><strong>Progress:</strong> Report long-running work.</li>
+							</ul>
+						</div>
+						<div>
+							<ul class="tight">
+								<li><strong>Background tasks:</strong> Keep work moving after the initial request.</li>
+								<li><strong>Resources:</strong> Publish read-only context.</li>
+								<li><strong>Prompts:</strong> Package repeated workflows.</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h3>Exercise 4: visual UI and confirmation</h3>
+					<p class="lead">Use Prefab UI to return interactive components, then use elicitation to confirm a purchase before changing state.</p>
+					<ul class="tight">
+						<li><code>@mcp.tool(app=True)</code> for an inventory chart.</li>
+						<li>Product catalog cards with prices and stock badges.</li>
+						<li><code>ctx.elicit(...)</code> for purchase confirmation.</li>
+					</ul>
+				</section>
+
+				<section class="no-code-badge">
+					<h3>Purchase confirmation</h3>
+					<pre><code class="language-python" data-trim data-noescape>
+response = await ctx.elicit(
+    message=f"Buy {quantity}x {product_name} for ${total:.2f}?",
+    response_type=PurchaseConfirmation,
+)
+
+if response.action != "accept" or not response.data.confirm:
+    return "Purchase cancelled."
+					</code></pre>
+					<p class="muted">The server can pause and ask the human before committing the action.</p>
+				</section>
+
+				<section class="heading-only">
+					<h2>Authenticated MCP servers</h2>
+					<p style="font-size: 0.86em; max-width: 760px;">When tools access user-specific data, the server needs to know who is calling.</p>
+				</section>
+
+				<section>
+					<h3>MCP auth in one slide</h3>
+					<ul class="tight">
+						<li>MCP auth builds on OAuth 2.1.</li>
+						<li>The server advertises protected resource metadata.</li>
+						<li>The client discovers how to authorize.</li>
+						<li>Dynamic client registration or client metadata can be part of the flow.</li>
+						<li>The host gets a token, then retries the MCP request.</li>
+					</ul>
+					<aside class="notes">
+						Use this as the conceptual bridge before showing Keycloak. Avoid diving too deep into every acronym until the diagram or demo.
+					</aside>
+				</section>
+
+				<section>
+					<h3>Keycloak gives us a local-friendly IAM</h3>
+					<div class="two-column">
+						<div>
+							<p><strong>Identity server</strong></p>
+							<ul class="tight">
+								<li>Users and test credentials</li>
+								<li>OAuth clients</li>
+								<li>Scopes and audience</li>
+							</ul>
+						</div>
+						<div>
+							<p><strong>MCP server</strong></p>
+							<ul class="tight">
+								<li>Validates access tokens</li>
+								<li>Requires <code>openid</code> and <code>mcp:access</code></li>
+								<li>Can identify the caller</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section class="no-code-badge">
+					<h3>FastMCP Keycloak provider</h3>
+					<pre><code class="language-python" data-trim data-noescape>
+from fastmcp.server.auth.providers.keycloak import KeycloakAuthProvider
+
+auth = KeycloakAuthProvider(
+    realm_url="https://example.com/realms/pycon",
+    base_url="http://localhost:8420",
+    required_scopes=["openid", "mcp:access"],
+    audience="product-store",
+)
+
+mcp = FastMCP("Pamela's Bakery", auth=auth)
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Exercise 5: add authentication</h3>
+					<ol class="tight">
+						<li>Add <code>KeycloakAuthProvider</code>.</li>
+						<li>Paste the instructor-provided realm URL and audience.</li>
+						<li>Restart the server.</li>
+						<li>Trigger a tool call from the client.</li>
+						<li>Complete the browser login and consent flow.</li>
+						<li>Bonus: make <code>buy_product</code> include the authenticated user ID.</li>
+					</ol>
+				</section>
+
+				<section class="heading-only">
+					<h2>Next steps</h2>
+					<p style="font-size: 0.86em; max-width: 760px;">Take the working server from tutorial code to something you can operate.</p>
+				</section>
+
+				<section>
+					<h3>Deployment checklist</h3>
+					<ul class="tight">
+						<li>Pick a transport and hosting model intentionally.</li>
+						<li>Keep secrets out of source control and demo configs.</li>
+						<li>Log tool calls without logging sensitive payloads.</li>
+						<li>Rate-limit expensive or state-changing tools.</li>
+						<li>Design tool descriptions as part of your API surface.</li>
+						<li>Test with both direct MCP tools and LLM-driven clients.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Security questions to ask every server</h3>
+					<ul class="tight">
+						<li>Who is allowed to call this tool?</li>
+						<li>What data can the tool read or mutate?</li>
+						<li>Does the user understand when state will change?</li>
+						<li>Can prompt injection alter the server's authority?</li>
+						<li>What happens when the model passes surprising arguments?</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Fallbacks if the internet gets weird</h3>
+					<table>
+						<thead>
+							<tr><th>Dependency</th><th>Preferred</th><th>Fallback</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>Environment</td><td>Codespaces</td><td>Dev Container or local Python</td></tr>
+							<tr><td>Packages</td><td>PyPI during session</td><td>Prebuilt environment or USB cache</td></tr>
+							<tr><td>LLM</td><td>Cloud model</td><td>Ollama or skip Exercise 2</td></tr>
+							<tr><td>Auth</td><td>Hosted Keycloak</td><td>Local network or local container</td></tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section>
+					<h3>What you should leave with</h3>
+					<ul class="tight">
+						<li>A working Python MCP server.</li>
+						<li>A feel for how hosts, clients, and servers cooperate.</li>
+						<li>Experience testing MCP tools outside the model loop.</li>
+						<li>A first pass at advanced UX and authenticated access.</li>
+						<li>A path for extending your server after PyCon.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Thank you</h3>
+					<p>Repository:<br><a target="_blank" href="https://github.com/pamelafox/pycon2026-mcp-tutorial">github.com/pamelafox/pycon2026-mcp-tutorial</a></p>
+					<p>FastMCP docs:<br><a target="_blank" href="https://gofastmcp.com/">gofastmcp.com</a></p>
+					<p>MCP specification:<br><a target="_blank" href="https://modelcontextprotocol.io/">modelcontextprotocol.io</a></p>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+		<script>
+			Reveal.initialize({
+				width: 1280,
+				height: 720,
+				hash: true,
+				center: false,
+				slideNumber: true,
+				showNotes: false,
+				margin: 0,
+				preloadIframes: true,
+				autoPlayMedia: true,
+				plugins: [RevealHighlight, RevealMenu],
+				pdfSeparateFragments: true
+			});
+		</script>
+	</body>
+</html>

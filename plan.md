@@ -87,6 +87,7 @@ I can come up with fallback strategies for each requirement. The fallback may in
 - Deploy keycloak server to Azure Container Apps, also run it off local network
 - Get Post-its
 - Enable pre-builds
+- Add link to feedback survey
 
 ## Open questions
 

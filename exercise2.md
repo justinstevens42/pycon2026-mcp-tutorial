@@ -3,6 +3,10 @@
 In this exercise, you'll write a Python script that creates an AI agent and connects it to an MCP server. The agent will use the MCP server's tools to answer questions - just like the coding agents from Exercise 1, but now you're building the agent yourself.
 
 - [Step 1: Set up an LLM connection](#step-1-set-up-an-llm-connection)
+    - [Option 1: Ollama](#option-1-ollama)
+    - [Option 2: OpenRouter](#option-2-openrouter)
+    - [Option 3: OpenAI](#option-3-openai)
+    - [Option 4: Azure OpenAI](#option-4-azure-openai)
 - [Step 2: Build an agent with MCP tools](#step-2-build-an-agent-with-mcp-tools)
   - [Option A: Pydantic AI](#option-a-pydantic-ai)
   - [Option B: LangChain v1](#option-b-langchain-v1)
@@ -16,10 +20,10 @@ In this exercise, you'll write a Python script that creates an AI agent and conn
 
 Your agent needs access to an LLM that supports **tool calling**. Pick **one** of the providers below and create a `.env` file in the repo root. For all providers, use the same three variables: `LLM_BASE_URL`, `LLM_API_KEY`, and `LLM_MODEL_NAME`.
 
-### Option 1: Ollama (local, no account needed)
+### Option 1: Ollama
 
 Use [Ollama](https://ollama.com/) to run a local LLM on your machine - no API key required.
-⚠️ If you're Do NOT pull any new models on shared WiFi. In that case, only use this option if you have a powerful enough model downloaded already.
+⚠️ If you're on shared WiFi, do _not_ pull any new models. In that case, only use Ollama if you have a powerful enough model downloaded already.
 
 1. [Install Ollama](https://ollama.com/download)
 2. Pull a model that supports [tool calling](https://ollama.com/search?c=tools):
@@ -57,8 +61,6 @@ Use [Ollama](https://ollama.com/) to run a local LLM on your machine - no API ke
    LLM_API_KEY=<your OpenRouter API key>
    LLM_MODEL_NAME=google/gemma-3-27b-it
    ```
-
-> **Tip:** OpenRouter uses the OpenAI-compatible API, so this works with the same three `LLM_*` variables.
 
 ### Option 3: OpenAI
 
@@ -135,7 +137,7 @@ async def main():
     )
 
     result = await agent.run(
-        "Consult the FastMCP Changelog and list the last 5 FastMCP releases "
+        "Consult the PrefectHQ/fastmcp changelog and list the last 5 FastMCP releases "
         "with release names and one highlight each."
     )
     print(result.output)
@@ -205,7 +207,8 @@ async def run_agent():
                 HumanMessage(
                     content=(
                         "Consult the FastMCP Changelog and list the last 5 FastMCP "
-                        "releases with release names and one highlight each."
+                        "releases with release names and one highlight each from "
+                        "PrefectHQ/fastmcp."
                     )
                 ),
             ]
@@ -265,7 +268,7 @@ async def main():
         ) as agent,
     ):
         result = await agent.run(
-            "Consult the FastMCP Changelog and list the last 5 FastMCP releases "
+            "Consult the PrefectHQ/fastmcp changelog and list the last 5 FastMCP releases "
             "with release names and one highlight each."
         )
         print(result.text)

@@ -35,7 +35,7 @@ async def main():
     )
 
     result = await agent.run(
-        "Consult the PrefectHQ FastMCP Changelog and list the last 5 FastMCP releases with release names and one highlight each."
+        "Consult the PrefectHQ/FastMCP Changelog and list the last 5 FastMCP releases with release names and one highlight each."
     )
     print(result.output)
 

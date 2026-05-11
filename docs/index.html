@@ -969,8 +969,8 @@ def analyze_spending_prompt(
 						</div>
 						<div>
 							<p><strong>MCPJam</strong></p>
-							<p>A friendly web UI for trying MCP servers during development.</p>
-							<p class="muted"><a target="_blank" href="https://www.mcpjam.com/">mcpjam.com</a></p>
+							<pre><code class="language-bash" data-trim>npx @mcpjam/inspector@latest</code></pre>
+							<p class="muted">A friendly web UI for trying MCP servers during development. <a target="_blank" href="https://www.mcpjam.com/">mcpjam.com</a></p>
 						</div>
 					</div>
 					<p class="callout" style="margin-top: 24px;">Useful debugging loop: direct server logs first, Inspector or MCPJam second, LLM client last.</p>
@@ -995,7 +995,7 @@ def analyze_spending_prompt(
 
 				<section class="heading-only">
 					<h2>Advanced server features</h2>
-					<p style="font-size: 0.86em; max-width: 760px;">MCP servers can do more than return plain strings.</p>
+					<aside class="notes">MCP servers can do more than return plain strings.</aside>
 				</section>
 
 				<section>
@@ -1019,13 +1019,17 @@ def analyze_spending_prompt(
 				</section>
 
 				<section>
-					<h3>Exercise 4: visual UI and confirmation</h3>
-					<p class="lead">Use Prefab UI to return interactive components, then use elicitation to confirm a purchase before changing state.</p>
-					<ul class="tight">
-						<li><code>@mcp.tool(app=True)</code> for an inventory chart.</li>
-						<li>Product catalog cards with prices and stock badges.</li>
-						<li><code>ctx.elicit(...)</code> for purchase confirmation.</li>
-					</ul>
+					<div style="position: absolute; top: 38px; right: 58px; font-size: 0.72em; font-weight: 700; color: var(--deck-heading); padding: 8px 14px; border: 2px solid rgba(255, 50, 200, 0.45); border-radius: 8px; background: rgba(255, 255, 255, 0.72);">⏳ 20 min</div>
+					<h3>Exercise time</h3>
+					<p><strong>Exercise 4:</strong><br>
+						Add visual UI and purchase confirmation<br>
+						<a href="https://tinyurl.com/pyconmcp-ex4" target="_blank"><code>tinyurl.com/pyconmcp-ex4</code></a>
+					</p>
+
+					<p style="margin-top: 42px;">🙋🏽‍♀️ 🙋🏻‍♂️ 🙋🏿 🙋🏼‍♀️ 🙋🏾‍♂️ Got a question? Raise your hand, we'll come around!</p>
+					<aside class="notes">
+						Give attendees time to work through exercise4.md. Remind them to restart the server after adding Prefab UI tools and elicitation.
+					</aside>
 				</section>
 
 				<section class="no-code-badge">
@@ -1100,15 +1104,17 @@ mcp = FastMCP("Pamela's Bakery", auth=auth)
 				</section>
 
 				<section>
-					<h3>Exercise 5: add authentication</h3>
-					<ol class="tight">
-						<li>Add <code>KeycloakAuthProvider</code>.</li>
-						<li>Paste the instructor-provided realm URL and audience.</li>
-						<li>Restart the server.</li>
-						<li>Trigger a tool call from the client.</li>
-						<li>Complete the browser login and consent flow.</li>
-						<li>Bonus: make <code>buy_product</code> include the authenticated user ID.</li>
-					</ol>
+					<div style="position: absolute; top: 38px; right: 58px; font-size: 0.72em; font-weight: 700; color: var(--deck-heading); padding: 8px 14px; border: 2px solid rgba(255, 50, 200, 0.45); border-radius: 8px; background: rgba(255, 255, 255, 0.72);">⏳ 35 min</div>
+					<h3>Exercise time</h3>
+					<p><strong>Exercise 5:</strong><br>
+						Add Keycloak authentication to your MCP server<br>
+						<a href="https://tinyurl.com/pyconmcp-ex5" target="_blank"><code>tinyurl.com/pyconmcp-ex5</code></a>
+					</p>
+
+					<p style="margin-top: 42px;">🙋🏽‍♀️ 🙋🏻‍♂️ 🙋🏿 🙋🏼‍♀️ 🙋🏾‍♂️ Got a question? Raise your hand, we'll come around!</p>
+					<aside class="notes">
+						Give attendees time to work through exercise5.md. Have the instructor-provided Keycloak realm URL, audience, and test credentials ready.
+					</aside>
 				</section>
 
 				<section class="heading-only">
@@ -1137,21 +1143,6 @@ mcp = FastMCP("Pamela's Bakery", auth=auth)
 						<li>Can prompt injection alter the server's authority?</li>
 						<li>What happens when the model passes surprising arguments?</li>
 					</ul>
-				</section>
-
-				<section>
-					<h3>Fallbacks if the internet gets weird</h3>
-					<table>
-						<thead>
-							<tr><th>Dependency</th><th>Preferred</th><th>Fallback</th></tr>
-						</thead>
-						<tbody>
-							<tr><td>Environment</td><td>Codespaces</td><td>Dev Container or local Python</td></tr>
-							<tr><td>Packages</td><td>PyPI during session</td><td>Prebuilt environment or USB cache</td></tr>
-							<tr><td>LLM</td><td>Cloud model</td><td>Ollama or skip Exercise 2</td></tr>
-							<tr><td>Auth</td><td>Hosted Keycloak</td><td>Local network or local container</td></tr>
-						</tbody>
-					</table>
 				</section>
 
 				<section>

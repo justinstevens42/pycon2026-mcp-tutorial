@@ -50,7 +50,7 @@ Restart your server and ask your coding agent:
 
 You should see an interactive bar chart rendered inline in the conversation:
 
-![Inventory chart showing bar chart of product stock levels](screenshot_inventorychart.png)
+![Inventory chart showing bar chart of product stock levels](docs/screenshot_inventorychart.png)
 
 Try buying a product first, then viewing the chart again to see the updated quantities.
 
@@ -93,7 +93,7 @@ Restart your server and ask your coding agent:
 
 You should see a card grid with your products, prices, and stock badges:
 
-![Product catalog showing cards with prices and stock badges](screenshot_productcatalog.png)
+![Product catalog showing cards with prices and stock badges](docs/screenshot_productcatalog.png)
 
 ---
 

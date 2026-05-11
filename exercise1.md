@@ -84,13 +84,13 @@ Set up **one** of the coding agents from instructions below, either [GitHub Copi
 
 1. Make sure the [GitHub Copilot extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) is installed. If you opened this project in Codespaces, the extension is pre-installed.
 2. At the top of VS Code, locate and click the Toggle Chat icon to open a Copilot Chat side panel.
-  ![Screenshot of "Toggle chat" icon in top right](screenshot_copilot_togglechat.png)
+   ![Screenshot of "Toggle chat" icon in top right](docs/screenshot_copilot_togglechat.png)
 
    > 🪧 **Note:** If this is your first time using GitHub Copilot, you will need to accept the usage terms to continue.
 
 3. Make sure the chat is in **Agent** mode.
 
-   ![Screenshot of chat box with "Agent" mode selected](screenshot_copilot_agent.png)
+   ![Screenshot of chat box with "Agent" mode selected](docs/screenshot_copilot_agent.png)
 
 4. Send a test message "Hello" to confirm the agent is working.
 5. Move on to [Step 3](#step-3-use-a-public-mcp-server-no-auth)
@@ -155,7 +155,7 @@ Follow the instructions for your agent:
 
 3. In the Copilot Chat panel, click the tools icon (🔧) to confirm the server tools are listed.
 
-   ![Screenshot of tools listing for remote-mcp-server](screenshot_copilot_tools.png)
+   ![Screenshot of tools listing for remote-mcp-server](docs/screenshot_copilot_tools.png)
 
 4. Ask a question that can be answered by the MCP server:
 
@@ -223,35 +223,35 @@ The recommendation is to use the [Hugging Face MCP server](https://huggingface.c
 
 2. Select "Start" on the server in the config file. 
 
-   ![Screenshot of Start button for Hugging Face MCP server in VS Code](screenshot_vscode_hf_startserver.png)
+   ![Screenshot of Start button for Hugging Face MCP server in VS Code](docs/screenshot_vscode_hf_startserver.png)
 
 3. A prompt will pop up asking whether the MCP server can authenticate to Hugging Face. Select **Allow**.
 
-   ![Screenshot of VS Code prompt asking to allow Hugging Face authentication](screenshot_vscode_hf_auth_allow.png)
+   ![Screenshot of VS Code prompt asking to allow Hugging Face authentication](docs/screenshot_vscode_hf_auth_allow.png)
 
 4. VS Code will ask whether it can open the external Hugging Face authorization website. Select **Open**.
 
-   ![Screenshot of VS Code prompt asking to open the Hugging Face authorization website](screenshot_vscode_hf_auth_redirect.png)
+   ![Screenshot of VS Code prompt asking to open the Hugging Face authorization website](docs/screenshot_vscode_hf_auth_redirect.png)
 
 5. If you are not yet logged into Hugging Face, login or sign-in on the page that pops up.
 
-   ![Screenshot of Hugging Face login](screenshot_claudecode_hf_login.png)
+   ![Screenshot of Hugging Face login](docs/screenshot_claudecode_hf_login.png)
 
 6. In the browser, select **Authorize** to grant VS Code access to Hugging Face MCP tools.
 
-   ![Screenshot of Hugging Face authorization screen for Visual Studio Code](screenshot_vscode_hf_consent_screen.png)
+   ![Screenshot of Hugging Face authorization screen for Visual Studio Code](docs/screenshot_vscode_hf_consent_screen.png)
 
 7. After authorization, the browser will ask to reopen VS Code. Select **Open**.
 
-   ![Screenshot of browser prompt asking to reopen Visual Studio Code](screenshot_vscode_hf_reopen_vscode.png)
+   ![Screenshot of browser prompt asking to reopen Visual Studio Code](docs/screenshot_vscode_hf_reopen_vscode.png)
 
 8. Back in VS Code, confirm the Hugging Face MCP server is running.
 
-   ![Screenshot of Hugging Face MCP server running in VS Code](screenshot_vscode_hf_successful.png)
+   ![Screenshot of Hugging Face MCP server running in VS Code](docs/screenshot_vscode_hf_successful.png)
 
 9. Click the tools icon (🔧) and confirm the Hugging Face tools are listed and enabled. 
 
-   ![Screenshot of HuggingFace MCP server tools in VS Code](screenshot_vscode_hf_tools.png)
+   ![Screenshot of HuggingFace MCP server tools in VS Code](docs/screenshot_vscode_hf_tools.png)
 
 10. Ask a question that requires context from HuggingFace:
 
@@ -271,15 +271,15 @@ The recommendation is to use the [Hugging Face MCP server](https://huggingface.c
 
 3. If you are not yet logged into Hugging Face, login or sign-in on the page that pops up.
 
-   ![Screenshot of Hugging Face login](screenshot_claudecode_hf_login.png)
+   ![Screenshot of Hugging Face login](docs/screenshot_claudecode_hf_login.png)
 
 4. Select **Authorize** on the Hugging Face consent screen.
 
-   ![Screenshot of Copilot CLI consent screen](screenshot_copilotcli_hf_consent_screen.png)
+   ![Screenshot of Copilot CLI consent screen](docs/screenshot_copilotcli_hf_consent_screen.png)
 
 5. Back inside the Copilot CLI, run `/mcp` and you should see that the Hugging Face server is authenticated:
 
-   ![Screenshot of MCP server listing in Copilot CLI](screenshot_copilotcli_hf_mcplist.png)
+   ![Screenshot of MCP server listing in Copilot CLI](docs/screenshot_copilotcli_hf_mcplist.png)
 
 6. Ask a question that requires context from Hugging Face:
 
@@ -297,27 +297,27 @@ The recommendation is to use the [Hugging Face MCP server](https://huggingface.c
 
 2. Open Claude Code with `claude` and run `/mcp` to list configured MCP servers. Select the "huggingface" server.
 
-   ![Screenshot of manage MCP servers in Claude Code](screenshot_claudecode_managemcpservers.png)
+   ![Screenshot of manage MCP servers in Claude Code](docs/screenshot_claudecode_managemcpservers.png)
 
 3. In the "Hugging Face MCP server" configuration screen, select "Authenticate":
 
-   ![Screenshot of Hugging Face MCP server config in Claude Code](screenshot_claudecode_hf_mcpconfig.png)
+   ![Screenshot of Hugging Face MCP server config in Claude Code](docs/screenshot_claudecode_hf_mcpconfig.png)
 
    Claude Code will start off the OAuth flow by redirecting to a browser:
 
-   ![Screenshot of message in Claude Code about redirecting to a browser](screenshot_claudecode_hf_oauth_flow_start.png)
+   ![Screenshot of message in Claude Code about redirecting to a browser](docs/screenshot_claudecode_hf_oauth_flow_start.png)
 
 4. If you are not yet logged into Hugging Face, login or sign-in on the page that pops up:
 
-   ![Screenshot of Hugging Face login](screenshot_claudecode_hf_login.png)
+   ![Screenshot of Hugging Face login](docs/screenshot_claudecode_hf_login.png)
 
 5. After login, authorize Claude Code to grant access to Hugging Face:
 
-   ![Screenshot of Hugging Face grant screen](screenshot_claudecode_hf_consent_screen_browser.png)
+   ![Screenshot of Hugging Face grant screen](docs/screenshot_claudecode_hf_consent_screen_browser.png)
 
    You should see that auth was successful in both the browser and terminal:
 
-   ![Screenshot of Claude code success](screenshot_claudecode_hf_successful_terminal.png)
+   ![Screenshot of Claude code success](docs/screenshot_claudecode_hf_successful_terminal.png)
 
 6. Ask a question that requires the server to answer:
 

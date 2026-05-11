@@ -137,7 +137,6 @@
 		}
 
 		.reveal code {
-			font-size: 0.84em;
 			padding: 0.08em 0.26em;
 			border-radius: 0.3em;
 			background: rgba(50, 17, 95, 0.08);
@@ -147,7 +146,7 @@
 		.reveal pre code {
 			padding: 0;
 			background: transparent;
-			font-size: 0.86em;
+			font-size: 1.2em;
 			line-height: 1.35;
 			color: #10101a;
 		}
@@ -158,10 +157,8 @@
 			margin: 0;
 			padding: 12px 16px;
 			box-sizing: border-box;
-			border: 2px solid rgba(33, 232, 243, 0.8);
-			border-radius: 8px;
-			background: #fffaf1;
-			box-shadow: 0 0 22px rgba(33, 232, 243, 0.22), 0 12px 28px rgba(0, 0, 0, 0.24);
+			background: #f4f4f4;
+			box-shadow: none;
 		}
 
 		.reveal table {
@@ -617,7 +614,7 @@
 							<p>Install from Extensions:</p>
 							<img class="client-shot" src="screenshot_vscode_mcpextensions2.png" alt="VS Code extensions marketplace search results for MCP servers" style="width: 68%; margin: 0 0 0.7em 0;">
 							<p>Or configure <code>.mcp.json</code> file:</p>
-								<pre style="width: 95%; padding: 8px 10px; background: rgba(255, 219, 136, 0.28); box-shadow: 0 0 18px rgba(255, 219, 136, 0.28); border-color: transparent;"><code class="language-json" style="font-size: 0.9em; line-height: 1.2;">{
+								<pre style="width: 95%; padding: 8px 10px; background: rgba(255, 219, 136, 0.28);"><code class="language-json" style="font-size: 0.9em; line-height: 1.2;">{
 	"mcpServers": {
     "github": {
       "type": "http",
@@ -644,18 +641,18 @@
 						<div class="client-panel">
 							<h4>1. Add MCP servers</h4>
 							<p>Add remote servers from the CLI:</p>
-							<pre style="width: 95%; padding: 10px 12px; background: rgba(255, 219, 136, 0.28); box-shadow: 0 0 18px rgba(255, 219, 136, 0.28); border-color: transparent;"><code class="language-bash" style="font-size: 0.82em; line-height: 1.25;">claude mcp add \
+							<pre style="width: 95%; padding: 10px 12px; background: rgba(255, 219, 136, 0.28);"><code class="language-bash" style="font-size: 0.82em; line-height: 1.25;">claude mcp add \
 	--transport http huggingface \
 	'https://huggingface.co/mcp?login'</code></pre>
 							<p style="margin-top: 0.75em;">Then confirm what Claude Code can see:</p>
-							<pre style="width: 70%; padding: 10px 12px; background: rgba(255, 219, 136, 0.28); box-shadow: 0 0 18px rgba(255, 219, 136, 0.28); border-color: transparent;"><code class="language-bash" style="font-size: 0.82em; line-height: 1.25;">claude mcp list</code></pre>
+							<pre style="width: 70%; padding: 10px 12px; background: rgba(255, 219, 136, 0.28);"><code class="language-bash" style="font-size: 0.82em; line-height: 1.25;">claude mcp list</code></pre>
 
                             <p style="margin-top: 0.75em;">For authenticated servers, you will need to start up <code>claude</code> to go through the auth flow.</p>
 						</div>
 						<div class="client-panel">
 							<h4>2. Use from Claude Code</h4>
 							<p>Ask in the terminal, and Claude Code can call Hugging Face tools through MCP.</p>
-							<pre style="width: 95%; padding: 10px 12px; background: rgba(33, 232, 243, 0.12); box-shadow: 0 0 18px rgba(33, 232, 243, 0.22); border-color: rgba(33, 232, 243, 0.5);"><code class="language-text" style="font-size: 0.76em; line-height: 1.26;">&gt; what research papers are in 2026
+							<pre style="width: 95%; padding: 10px 12px; background: rgba(33, 232, 243, 0.12);"><code class="language-text" style="font-size: 0.76em; line-height: 1.26;">&gt; what research papers are in 2026
 	about vector retrieval?
 
 ⏺ huggingface - Paper Search (MCP)
@@ -786,6 +783,27 @@ Here are the first 12 results.
 				</section>
 
 				<section>
+					<h3>Pydantic AI + MCP</h3>
+					<pre><code style="font-size: 1em" class="language-python" data-trim data-noescape>
+from pydantic_ai import Agent
+from pydantic_ai.mcp import MCPServerStreamableHTTP
+from pydantic_ai.models.openai import OpenAIChatModel
+
+model = OpenAIChatModel("gpt-5.5")
+server = MCPServerStreamableHTTP(url="https://learn.microsoft.com/api/mcp")
+
+agent = Agent(model, toolsets=[server],
+  system_prompt="Use available tools to answer questions.")
+
+result = await agent.run("How do I use DefaultAzureCredential in Python?")
+print(result.output)
+					</code></pre>
+					<aside class="notes">
+						The framework handles model calls, MCP tool discovery, tool execution, and passing results back into the agent loop. Exercise 2 has complete versions for several frameworks.
+					</aside>
+				</section>
+
+				<section>
 					<div style="position: absolute; top: 38px; right: 58px; font-size: 0.72em; font-weight: 700; color: var(--deck-heading); padding: 8px 14px; border: 2px solid rgba(255, 50, 200, 0.45); border-radius: 8px; background: rgba(255, 255, 255, 0.72);">⏳ 30 min</div>
 					<h3>Exercise time</h3>
 					<p><strong>Exercise 1:</strong><br>
@@ -806,8 +824,25 @@ Here are the first 12 results.
 				</section>
 
 				<section class="heading-only">
-					<h2>Build an MCP server</h2>
-					<p style="font-size: 0.86em; max-width: 760px;">FastMCP gives us a compact Python API for tools, resources, prompts, and transports.</p>
+					<h2>Building an MCP server</h2>
+					<p style="font-size: 0.86em; max-width: 760px;">First, pick the Python framework that matches how much protocol surface and production support you need.</p>
+				</section>
+
+				<section>
+					<h3>Python MCP frameworks</h3>
+					<table style="font-size: 0.9em; margin-top: 20px;">
+						<thead>
+							<tr><th style="width:20%">Framework</th><th>Description</th></tr>
+						</thead>
+						<tbody>
+							<tr><td><strong><a target="_blank" href="https://github.com/modelcontextprotocol/python-sdk">python-sdk</a></strong></td><td>Official Python SDK for MCP. Lets you build both clients and servers fully compatible with the protocol specification. Handles transport (stdio, SSE, HTTP), message cycles, tools, resources, and prompts.</td></tr>
+							<tr><td><strong><a target="_blank" href="https://gofastmcp.com/">fastmcp</a></strong></td><td>Framework built on top of the official SDK. Adds production-focused features like server composition, proxying, OpenAPI/FastAPI generation, enterprise authentication (Google, GitHub, Azure, Auth0, etc.), deployment utilities, and client libraries.</td></tr>
+						</tbody>
+					</table>
+					<aside class="notes">
+						We will use FastMCP for the tutorial because it keeps the server code compact while still building on the official MCP Python SDK.
+						The Python SDK is the official SDK, part of the Model Context Protocol GitHub organization. It stays as close to the specification as possible, and whenever something new lands in the spec it gets added to the SDK. However, the recommended choice is FastMCP. It is a framework built on top of the official SDK, so it has all the same functionality plus a lot more. FastMCP includes integration with auth providers, easier integration with FastAPI, easier deployment to production, logging, and OpenTelemetry support. That is why FastMCP is the framework used in this tutorial.
+					</aside>
 				</section>
 
 				<section>
@@ -815,13 +850,9 @@ Here are the first 12 results.
 					<pre><code class="language-python" data-trim data-noescape>
 from fastmcp import FastMCP
 
-mcp = FastMCP("Pamela's Bakery")
+mcp = FastMCP("Expenses tracker")
 
-INVENTORY = {
-    "Croissant": {"price": 3.50, "quantity": 40},
-    "Sourdough Loaf": {"price": 7.00, "quantity": 20},
-    "Cinnamon Roll": {"price": 4.25, "quantity": 30},
-}
+# Define tools, prompts, and resources here...
 
 if __name__ == "__main__":
     mcp.run(transport="streamable-http", host="0.0.0.0", port=8420)
@@ -829,54 +860,137 @@ if __name__ == "__main__":
 				</section>
 
 				<section>
-					<h3>Turn Python functions into MCP tools</h3>
-					<pre><code class="language-python" data-trim data-noescape>
-from typing import Annotated
-
-@mcp.tool
-async def buy_product(
-    product_name: Annotated[str, "Name of the product to buy"],
-    quantity: Annotated[int, "Number of items to buy"],
-) -&gt; str:
-    """Buy a product from the store, reducing its inventory."""
-    if product_name not in INVENTORY:
-        return f"Error: '{product_name}' not found."
-
-    product = INVENTORY[product_name]
-    if product["quantity"] &lt; quantity:
-        return "Error: Not enough stock."
-
-    product["quantity"] -= quantity
-    return f"Bought {quantity}x {product_name}."
-					</code></pre>
+					<h3>MCP transports: STDIO vs. HTTP</h3>
+					<table style="font-size: 0.8em; margin-top: 16px;">
+						<thead>
+							<tr><th style="width: 18%;"></th><th>STDIO</th><th>HTTP (Streamable)</th></tr>
+						</thead>
+						<tbody>
+							<tr><td><strong>Client config</strong></td><td>Command to run:<br><code>uv run mcp_server.py</code></td><td>Server URL:<br><code>http://localhost:8420/mcp</code></td></tr>
+							<tr><td><strong>Startup</strong></td><td>Client launches the server process</td><td>Server runs before clients connect</td></tr>
+							<tr><td><strong>Best for</strong></td><td>Local tools, quick tests, single-user apps</td><td>Remote access, web apps, multiple clients</td></tr>
+							<tr><td><strong>Tradeoff</strong></td><td>Simple, but tied to one local process</td><td>More flexible, but needs host/port setup</td></tr>
+						</tbody>
+					</table>
+					<p class="muted" style="font-size: 0.66em; margin-top: 18px;"><a target="_blank" href="https://gofastmcp.com/deployment/running-server">gofastmcp.com/deployment/running-server</a></p>
+					<aside class="notes">
+						MCP supports multiple transports. STDIO is common for local tools that the client starts for you. In this tutorial, we will use streamable HTTP so the server runs as a visible local service and can be reused by different clients and inspectors.
+					</aside>
 				</section>
 
 				<section>
-					<h3>Run and test the server</h3>
+					<h3>Tool with FastMCP</h3>
+					<pre><code class="language-python" style="font-size: 0.95em;" data-trim data-noescape>
+@mcp.tool
+async def add_expense(
+    date: Annotated[date, "Date of the expense in YYYY-MM-DD format"],
+    amount: Annotated[float, "Positive numeric amount of the expense"],
+    category: Annotated[Category, "Category label"],
+    description: Annotated[str, "Human-readable description of expense"],
+    payment_method: Annotated[PaymentMethod, "Payment method used"],
+):
+    # Implementation ...
+
+    return f"Added expense: ${amount} for {description} on {date_iso}"
+					</code></pre>
+					<p style="font-size: 0.72em; margin: 14px 0 0;"><strong>Full example:</strong> <a target="_blank" href="../servers/basic_mcp_http.py"><code>basic_mcp_http.py</code></a></p>
+					<p style="font-size: 0.72em; margin-top: 18px;">To trigger the tool call in VS Code, send a chat message asking to log an expense.</p>
+					<aside class="notes">
+						FastMCP turns a decorated Python function into an MCP tool. Type annotations and parameter descriptions become part of the tool schema the agent sees.
+					</aside>
+				</section>
+
+				<section>
+					<h3>Resource with FastMCP</h3>
+					<pre><code class="language-python" style="font-size: 0.95em;" data-trim data-noescape>
+@mcp.resource("resource://expenses")
+async def get_expenses_data():
+    csv_content = f"Expense data ({len(expenses_data)} entries):\n\n"
+    for expense in expenses_data:
+        csv_content += (
+            f"Date: {expense['date']}, "
+            f"Amount: ${expense['amount']}, "
+            f"Category: {expense['category']}, "
+            f"Description: {expense['description']}, "
+            f"Payment: {expense['payment_method']}\n"
+        )
+    return csv_content
+					</code></pre>
+					<p style="font-size: 0.72em; margin: 14px 0 0;"><strong>Full example:</strong> <a target="_blank" href="../servers/basic_mcp_http.py"><code>basic_mcp_http.py</code></a></p>
+					<aside class="notes">
+						Resources expose read-only context that a host can attach to the model. Unlike tools, resources are selected as context rather than called as actions.
+						Demo: To select the resource in VS Code, use the <strong>Add Context...</strong> button in chat.<
+					</aside>
+				</section>
+
+				<section>
+					<h3>Prompt with FastMCP</h3>
+					<pre style="background: #f4f4f4;"><code class="language-python" style="font-size: 0.95em;" data-trim data-noescape>
+@mcp.prompt
+def analyze_spending_prompt(
+    category: str | None = None,
+    start_date: str | None = None,
+    end_date: str | None = None,
+) -&gt; str:
+    # Build filters ...
+    return f"""Please analyze my spending patterns {filter_text} and provide:
+    1. Total spending breakdown by category
+    2. Average daily/weekly spending
+    3. Most expensive single transaction
+    4. Payment method distribution"""
+					</code></pre>
+					<p style="font-size: 0.72em; margin: 14px 0 0;"><strong>Full example:</strong> <a target="_blank" href="../servers/basic_mcp_http.py"><code>basic_mcp_http.py</code></a></p>
+					<aside class="notes">
+						Prompts let the server package reusable instructions or workflows. They can accept arguments, generate the final prompt text, and appear in clients that support MCP prompts.
+						Demo: To use the prompt in VS Code, type <code>/</code> and select the prompt from the options.
+					</aside>
+				</section>
+
+				<section>
+					<h3>Run the server</h3>
+					<p><strong>Start the server:</strong></p>
+					<pre><code class="language-bash" data-trim>uv run servers/expenses_tracker.py</code></pre>
+
+					<img src="../docs/screenshot_expenses_server.png" alt="Terminal running the FastMCP server with log output" style="width: 80%; border-radius: 8px; border: 1px solid rgba(33, 232, 243, 0.5);">
+					<p style="font-size: 0.9em; margin-top: 28px;"><strong>Point agent at the local URL:</strong></p>
+					<pre><code class="language-text" data-trim>http://localhost:8000/mcp</code></pre>
+					<aside class="notes">
+						Start the server first, then configure the MCP client or coding agent to connect to the local streamable HTTP endpoint.
+					</aside>
+				</section>
+
+				<section>
+					<h3>Test with MCP Inspector or MCPJam</h3>
 					<div class="two-column">
 						<div>
-							<p><strong>Start it</strong></p>
-							<pre><code class="language-bash" data-trim>uv run servers/store_server.py</code></pre>
-							<p class="muted">Server URL: <code>http://localhost:8420/mcp</code></p>
+							<p><strong>MCP Inspector</strong></p>
+							<pre><code class="language-bash" data-trim>npx @modelcontextprotocol/inspector</code></pre>
+							<p class="muted">Official local tester for inspecting tools, resources, prompts, and raw MCP messages.</p>
 						</div>
 						<div>
-							<p><strong>Inspect it</strong></p>
-							<pre><code class="language-bash" data-trim>npx @modelcontextprotocol/inspector</code></pre>
-							<p class="muted">MCPJam is another friendly local tester.</p>
+							<p><strong>MCPJam</strong></p>
+							<p>A friendly web UI for trying MCP servers during development.</p>
+							<p class="muted"><a target="_blank" href="https://www.mcpjam.com/">mcpjam.com</a></p>
 						</div>
 					</div>
+					<p class="callout" style="margin-top: 24px;">Useful debugging loop: direct server logs first, Inspector or MCPJam second, LLM client last.</p>
+					<aside class="notes">
+						Inspector and MCPJam let you verify the server surface before adding the uncertainty of model-driven tool calls.
+					</aside>
 				</section>
 
 				<section>
-					<h3>Exercise 3: product-store server</h3>
-					<ol class="tight">
-						<li>Create <code>servers/store_server.py</code>.</li>
-						<li>Choose a store theme and inventory.</li>
-						<li>Add <code>list_products</code>.</li>
-						<li>Add <code>buy_product</code>.</li>
-						<li>Test with a coding agent, MCP Inspector, and MCPJam.</li>
-					</ol>
-					<p class="callout">The useful debugging loop: direct server logs first, Inspector second, LLM client last.</p>
+					<div style="position: absolute; top: 38px; right: 58px; font-size: 0.72em; font-weight: 700; color: var(--deck-heading); padding: 8px 14px; border: 2px solid rgba(255, 50, 200, 0.45); border-radius: 8px; background: rgba(255, 255, 255, 0.72);">⏳ 40 min</div>
+					<h3>Exercise time</h3>
+					<p><strong>Exercise 3:</strong><br>
+						Build your own product-store MCP server<br>
+						<a href="https://tinyurl.com/pyconmcp-ex3" target="_blank"><code>tinyurl.com/pyconmcp-ex3</code></a>
+					</p>
+
+					<p style="margin-top: 42px;">🙋🏽‍♀️ 🙋🏻‍♂️ 🙋🏿 🙋🏼‍♀️ 🙋🏾‍♂️ Got a question? Raise your hand, we'll come around!</p>
+					<aside class="notes">
+						Give attendees time to work through exercise3.md. Remind them to test with direct server logs, MCP Inspector or MCPJam, and then their coding agent.
+					</aside>
 				</section>
 
 				<section class="heading-only">
@@ -1056,6 +1170,23 @@ mcp = FastMCP("Pamela's Bakery", auth=auth)
 					<p>Repository:<br><a target="_blank" href="https://github.com/pamelafox/pycon2026-mcp-tutorial">github.com/pamelafox/pycon2026-mcp-tutorial</a></p>
 					<p>FastMCP docs:<br><a target="_blank" href="https://gofastmcp.com/">gofastmcp.com</a></p>
 					<p>MCP specification:<br><a target="_blank" href="https://modelcontextprotocol.io/">modelcontextprotocol.io</a></p>
+				</section>
+
+				<section>
+					<h3>Before you go</h3>
+					<div style="display: grid; grid-template-columns: minmax(0, 0.95fr) 320px; gap: 44px; align-items: center; margin-top: 34px;">
+						<div>
+							<p style="font-size: 1em; line-height: 1.28; margin-top: 0;"><strong>Please take the tutorial survey.</strong></p>
+							<p>Your feedback helps improve future PyCon tutorials and tells us what to build next.</p>
+							<p class="muted" style="font-size: 0.72em; margin-top: 28px;">Scan the QR code to open the survey.</p>
+						</div>
+						<div aria-label="QR code placeholder" style="width: 300px; height: 300px; display: flex; align-items: center; justify-content: center; text-align: center; border: 3px dashed rgba(50, 17, 95, 0.45); border-radius: 8px; background: rgba(255, 255, 255, 0.72); color: var(--deck-muted); font-size: 0.72em; font-weight: 700; box-sizing: border-box;">
+							QR code placeholder
+						</div>
+					</div>
+					<aside class="notes">
+						Ask attendees to scan the QR code and fill out the survey before leaving.
+					</aside>
 				</section>
 
 			</div>

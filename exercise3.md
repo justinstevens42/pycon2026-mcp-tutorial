@@ -131,11 +131,11 @@ With the server running, add it to your coding agent from Exercise 1.
 
 ### GitHub Copilot in VS Code
 
-1. Add to `.vscode/mcp.json`:
+1. Add to `.mcp.json`:
 
     ```json
     {
-    "servers": {
+    "mcpServers": {
         "product-store": {
         "type": "http",
         "url": "http://localhost:8420/mcp"

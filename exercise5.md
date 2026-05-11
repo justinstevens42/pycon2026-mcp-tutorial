@@ -59,11 +59,11 @@ Restart your server:
 uv run servers/store_server.py
 ```
 
-Now connect from your coding agent. In VS Code, your `.vscode/mcp.json` stays the same — the URL doesn't change, but the server will now require authentication.
+Now connect from your coding agent. In VS Code, your `.mcp.json` stays the same — the URL doesn't change, but the server will now require authentication.
 
 ```json
 {
-  "servers": {
+    "mcpServers": {
     "product-store": {
       "type": "http",
       "url": "http://localhost:8420/mcp"

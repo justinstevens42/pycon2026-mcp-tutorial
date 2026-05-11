@@ -13,13 +13,13 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Chewy&display=swap">
 		<style>
 		:root {
-			--deck-ink: #fff7fb;
-			--deck-heading: #ffffff;
-			--deck-page: #190064;
-			--deck-panel: rgba(23, 6, 70, 0.84);
-			--deck-panel-strong: rgba(10, 3, 36, 0.9);
-			--deck-border: rgba(255, 255, 255, 0.32);
-			--deck-muted: #f8c7ff;
+			--deck-ink: #20152f;
+			--deck-heading: #32115f;
+			--deck-page: #fff7fd;
+			--deck-panel: rgba(255, 255, 255, 0.78);
+			--deck-panel-strong: rgba(255, 255, 255, 0.88);
+			--deck-border: rgba(88, 44, 130, 0.22);
+			--deck-muted: #6b4d78;
 			--deck-accent: #21e8f3;
 			--deck-pink: #ff32c8;
 			--deck-gold: #ffd66b;
@@ -33,11 +33,11 @@
 
 		.reveal {
 			background:
-				radial-gradient(circle at 15% 14%, rgba(255, 255, 255, 0.85) 0 2px, transparent 3px),
-				radial-gradient(circle at 82% 17%, rgba(255, 255, 255, 0.75) 0 2px, transparent 3px),
-				radial-gradient(circle at 92% 44%, rgba(255, 255, 255, 0.65) 0 2px, transparent 3px),
-				radial-gradient(circle at 24% 34%, rgba(255, 214, 107, 0.75) 0 2px, transparent 3px),
-				linear-gradient(180deg, #2b0eb0 0%, #4817c4 34%, #b113ce 68%, #ff42c5 100%);
+				radial-gradient(circle at 15% 14%, rgba(123, 44, 191, 0.18) 0 2px, transparent 3px),
+				radial-gradient(circle at 82% 17%, rgba(0, 132, 180, 0.16) 0 2px, transparent 3px),
+				radial-gradient(circle at 92% 44%, rgba(255, 50, 200, 0.14) 0 2px, transparent 3px),
+				radial-gradient(circle at 24% 34%, rgba(255, 174, 66, 0.18) 0 2px, transparent 3px),
+				linear-gradient(180deg, #fff7fd 0%, #f6f0ff 42%, #ffeef8 100%);
 			font-family: 'Atkinson Hyperlegible', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 			color: var(--deck-ink);
 			position: relative;
@@ -64,6 +64,15 @@
 			z-index: 5;
 		}
 
+		.reveal.title-slide-active {
+			background:
+				radial-gradient(circle at 15% 14%, rgba(255, 255, 255, 0.85) 0 2px, transparent 3px),
+				radial-gradient(circle at 82% 17%, rgba(255, 255, 255, 0.75) 0 2px, transparent 3px),
+				radial-gradient(circle at 92% 44%, rgba(255, 255, 255, 0.65) 0 2px, transparent 3px),
+				radial-gradient(circle at 24% 34%, rgba(255, 214, 107, 0.75) 0 2px, transparent 3px),
+				linear-gradient(180deg, #2b0eb0 0%, #4817c4 34%, #b113ce 68%, #ff42c5 100%);
+		}
+
 		.reveal .slides section {
 			text-align: left;
 			padding: 34px 56px 112px;
@@ -87,12 +96,12 @@
 			letter-spacing: normal;
 			font-weight: 400;
 			-webkit-text-stroke: 0;
-			text-shadow: 0 0 14px rgba(255, 50, 200, 0.45), 0 2px 0 rgba(0, 0, 0, 0.38);
+			text-shadow: 0 0 10px rgba(255, 50, 200, 0.22);
 		}
 
-		.reveal h1 { font-size: 1.9em; }
-		.reveal h2 { font-size: 1.72em; }
-		.reveal h3 { font-size: 1.46em; }
+		.reveal h1 { font-size: 1.82em; }
+		.reveal h2 { font-size: 1.64em; }
+		.reveal h3 { font-size: 1.38em; }
 
 		.reveal h3::after {
 			content: "";
@@ -104,18 +113,22 @@
 			filter: drop-shadow(0 0 8px var(--deck-shadow));
 		}
 
-		.reveal p,
+		.reveal p {
+			font-size: 0.84em;
+			line-height: 1.22;
+		}
+
 		.reveal li,
 		.reveal td,
 		.reveal th {
-			font-size: 0.9em;
-			line-height: 1.38;
+			font-size: 0.84em;
+			line-height: 1.32;
 		}
 
 		.reveal a,
 		.reveal a:hover,
 		.reveal a:visited {
-			color: var(--deck-accent);
+			color: revert;
 			text-decoration: revert;
 		}
 
@@ -127,8 +140,8 @@
 			font-size: 0.84em;
 			padding: 0.08em 0.26em;
 			border-radius: 0.3em;
-			background: rgba(255, 255, 255, 0.16);
-			color: #fff8bf;
+			background: rgba(50, 17, 95, 0.08);
+			color: #32115f;
 		}
 
 		.reveal pre code {
@@ -152,7 +165,7 @@
 		}
 
 		.reveal table {
-			font-size: 0.74em;
+			font-size: 0.7em;
 			width: 100%;
 			border-collapse: collapse;
 		}
@@ -165,11 +178,20 @@
 
 		.reveal th {
 			font-weight: 700;
-			background: rgba(255, 50, 200, 0.24);
+			background: rgba(255, 50, 200, 0.12);
 		}
 
 		.reveal tbody tr:nth-child(even) {
-			background: rgba(255, 255, 255, 0.06);
+			background: rgba(50, 17, 95, 0.04);
+		}
+
+		.reveal section.agenda-slide table {
+			font-size: 0.62em;
+		}
+
+		.reveal section.agenda-slide th,
+		.reveal section.agenda-slide td {
+			padding: 0.28em 0.48em;
 		}
 
 		.no-code-badge .code-badge {
@@ -182,7 +204,7 @@
 		}
 
 		.reveal .lead {
-			font-size: 0.9em;
+			font-size: 0.84em;
 			max-width: 900px;
 		}
 
@@ -190,14 +212,7 @@
 			color: var(--deck-muted);
 		}
 
-		.reveal .lead,
-		.reveal section:not(.heading-only) > p,
-		.reveal section:not(.heading-only) > ul,
-		.reveal section:not(.heading-only) > ol,
-		.reveal section:not(.heading-only) > table,
-		.reveal section:not(.heading-only) > .two-column,
-		.reveal section:not(.heading-only) > .three-column,
-		.reveal section:not(.heading-only) > .callout {
+		.reveal section:not(.heading-only) > * {
 			position: relative;
 			z-index: 1;
 		}
@@ -239,9 +254,9 @@
 		.reveal .callout {
 			border-left: 8px solid var(--deck-accent);
 			padding: 12px 20px;
-			background: rgba(0, 0, 0, 0.34);
-			box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
-			font-size: 0.9em;
+			background: rgba(255, 255, 255, 0.72);
+			box-shadow: inset 0 0 0 1px rgba(88, 44, 130, 0.16);
+			font-size: 0.84em;
 		}
 
 		.reveal section:not(.heading-only)::before {
@@ -250,16 +265,9 @@
 			inset: 22px 34px 94px;
 			border-radius: 14px;
 			background: var(--deck-panel-strong);
-			border: 1px solid rgba(255, 255, 255, 0.22);
-			box-shadow: 0 22px 60px rgba(0, 0, 0, 0.28), inset 0 0 42px rgba(255, 50, 200, 0.08);
+			border: 1px solid rgba(88, 44, 130, 0.22);
+			box-shadow: 0 22px 60px rgba(88, 44, 130, 0.16), inset 0 0 42px rgba(255, 50, 200, 0.06);
 			z-index: 0;
-		}
-
-		.reveal section:not(.heading-only) > h2,
-		.reveal section:not(.heading-only) > h3,
-		.reveal section:not(.heading-only) > pre {
-			position: relative;
-			z-index: 1;
 		}
 
 		.reveal section.heading-only {
@@ -280,8 +288,8 @@
 		.reveal section.heading-only h3,
 		.reveal section.heading-only p,
 		.reveal section.heading-only li {
-			color: #fff;
-			text-shadow: 0 0 18px rgba(255, 50, 200, 0.62), 0 4px 0 rgba(0, 0, 0, 0.38);
+			color: var(--deck-heading);
+			text-shadow: 0 0 12px rgba(255, 50, 200, 0.18);
 		}
 
 		.reveal section.heading-only h1::after,
@@ -300,16 +308,59 @@
 			display: none;
 		}
 
+		.reveal section.title-slide h1,
+		.reveal section.title-slide h2,
+		.reveal section.title-slide h3,
+		.reveal section.title-slide p {
+			color: #fff;
+			text-shadow: 0 0 18px rgba(255, 50, 200, 0.62), 0 4px 0 rgba(0, 0, 0, 0.38);
+		}
+
+		.reveal .client-panel {
+			border: 1px solid rgba(33, 232, 243, 0.48);
+			border-radius: 8px;
+			background: rgba(255, 255, 255, 0.58);
+			padding: 12px 14px;
+			box-sizing: border-box;
+			min-height: 330px;
+		}
+
+		.reveal .client-panel h4 {
+			font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
+			font-size: 0.78em;
+			font-weight: 700;
+			margin: 0 0 0.45em;
+			color: var(--deck-heading);
+		}
+
+		.reveal .client-panel p {
+			font-size: 0.58em;
+			line-height: 1.18;
+			margin: 0 0 0.5em;
+		}
+
+		.reveal .client-shot {
+			display: block;
+			width: 100%;
+			height: auto;
+			max-width: 100%;
+			object-fit: contain;
+			object-position: top center;
+			border: 1px solid #111;
+			border-radius: 0;
+			box-shadow: none;
+			background: #fff;
+		}
+
 		</style>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
 
-				<section class="heading-only">
+				<section class="heading-only title-slide">
 					<p>PyCon 2026 Tutorial</p>
 					<h1>Build your first MCP server in Python</h1>
-					<p style="font-size: 0.9em; max-width: 820px; margin-top: 16px;">Use FastMCP to build, test, extend, and secure a Python MCP server that real AI clients can call.</p>
 					<h3 style="margin-top: 42px;">Pamela Fox</h3>
 					<p style="font-size: 0.72em; opacity: 0.92; display: none;">github.com/pamelafox/pycon2026-mcp-tutorial</p>
 					<aside class="notes">
@@ -317,183 +368,441 @@
 					</aside>
 				</section>
 
+				<section class="heading-only">
+					<h2>Introductions</h2>
+				</section>
+
 				<section>
-					<h3>What we will build</h3>
-					<p class="lead">A local product-store MCP server that starts simple, then gains UI, elicitation, and OAuth-based authentication.</p>
+                    <h3>About me</h3>
+
+                    <img src="photo_pamela_olaf.jpg" alt="Photo of Pamela smiling with an Olaf statue" style="float:right; height:300px; border-radius: 6px;">
+                    <p>Python Cloud Advocate at Microsoft</p>
+                    <p>Formerly: UC Berkeley, Coursera, Khan Academy, Google</p>
+                    <p>Find me online at:</p>
+                    <table style="width:60%; float: left;">
+                        <tr>
+                        <td>Mastodon
+                        <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
+                        </tr>
+                        <tr>
+                        <td>BlueSky
+                        <td><a target="_blank" href="https://bsky.app/profile/pamelafox.bsky.social">@pamelafox.bsky.social</a></td>
+                        </tr>
+                        <tr>
+                        <td>Twitter
+                        <td><a target="_blank" href="https://www.twitter.com/pamelafox">@pamelafox</a></td>
+                        </tr>
+                        <tr>
+                        <td>LinkedIn
+                        <td><a target="_blank" href="https://www.linkedin.com/in/pamela-s-fox/">www.linkedin.com/in/pamela-s-fox/</a></td>
+                        </tr>
+                        <tr>
+                            <td>GitHub
+                            <td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td>
+                        </tr>
+                        <tr>
+                            <td>Website
+                            <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
+                        </tr>
+                    </table>
+				</section>
+
+				<section>
+					<h3>About you?</h3>
+
+                    <p>Turn to your neighbor and introduce yourself:</p>
 					<ul class="tight">
-						<li>Connect agents to existing MCP servers.</li>
-						<li>Use MCP tools from Python agent frameworks.</li>
-						<li>Build a FastMCP server with tools, prompts, and resources.</li>
-						<li>Test with coding agents, MCP Inspector, and MCPJam.</li>
-						<li>Add Keycloak-backed OAuth 2.1 authentication.</li>
+						<li>Name</li>
+                        <li>Location</li>
+                        <li>Is this your first PyCon, or have you attended before?</li>
+                        <li>What are you excited for at PyCon 2026?</li>
+                        <li>Invent an acronym for MCP and write on sticky note</li>
 					</ul>
 				</section>
 
-				<section>
-					<h3>Session shape</h3>
+				<section class="agenda-slide">
+					<h3>Today's agenda</h3>
 					<table>
-						<thead>
-							<tr><th>Part</th><th>Time</th><th>Exercise</th></tr>
+						<thead style="display: none;">
+							<tr><th>Part</th><th>Time</th></tr>
 						</thead>
 						<tbody>
-							<tr><td>MCP 101</td><td>30 min</td><td>Use popular MCP servers</td></tr>
-							<tr><td>Agents + MCP</td><td>20 min</td><td>Code a Python agent</td></tr>
-							<tr><td>Build an MCP server</td><td>45 min</td><td>Write, run, and modify a server</td></tr>
-							<tr><td>Advanced server features</td><td>20 min</td><td>Add UI or elicitation</td></tr>
-							<tr><td>Authenticated servers</td><td>45 min</td><td>Add Keycloak auth</td></tr>
-							<tr><td>Next steps</td><td>10 min</td><td>Deployment and security</td></tr>
+							<tr><td>Welcome</td><td>5 min</td></tr>
+							<tr><td>MCP 101</td><td>15 min</td></tr>
+							<tr><td>How agents use MCP</td><td>10 min</td></tr>
+							<tr><td>Exercise: Use existing MCP servers</td><td>30 min</td></tr>
+							<tr><td>Building an MCP server</td><td>15 min</td></tr>
+							<tr><td>Exercise: Build your own server</td><td>40 min</td></tr>
+							<tr><td>☕️ break</td><td>25 min</td></tr>
+							<tr><td>Advanced server features</td><td>10 min</td></tr>
+							<tr><td>Exercise: Add visual UI and confirmation</td><td>20 min</td></tr>
+							<tr><td>Authenticated servers</td><td>10 min</td></tr>
+							<tr><td>Exercise: Add authentication</td><td>20 min</td></tr>
+							<tr><td>Next steps</td><td>10 min</td></tr>
 						</tbody>
 					</table>
-				</section>
-
-				<section>
-					<h3>Before we start</h3>
-					<div class="three-column">
-						<div class="box">
-							<h4>Best path</h4>
-							<p>Open the repo in GitHub Codespaces. The environment is already configured.</p>
-						</div>
-						<div class="box">
-							<h4>Local container</h4>
-							<p>Use VS Code, Docker Desktop, and Dev Containers for the same setup locally.</p>
-						</div>
-						<div class="box">
-							<h4>Local Python</h4>
-							<p>Use Python 3.12+ and <code>uv sync</code> if you prefer your own environment.</p>
-						</div>
-					</div>
-					<aside class="notes">
-						Make sure participants are in the repository before moving into Exercise 1. Have helpers scan the room for environment issues.
-					</aside>
 				</section>
 
 				<section class="heading-only">
 					<h2>MCP 101</h2>
-					<p style="font-size: 0.86em; max-width: 720px;">A common protocol for giving AI applications tools, context, and workflows.</p>
 				</section>
 
-				<section>
-					<h3>Why MCP exists</h3>
-					<p class="lead">AI apps need a repeatable way to discover and call external capabilities without every integration becoming a one-off plugin.</p>
-					<ul class="tight">
-						<li><strong>Clients</strong> connect to servers and expose capabilities to the model.</li>
-						<li><strong>Servers</strong> publish tools, resources, prompts, and optional apps.</li>
-						<li><strong>Hosts</strong> are the applications people use: editors, chat apps, agents, and CLIs.</li>
-					</ul>
-				</section>
+
+
+                <section>
+                    <h3>Before MCP</h3>
+                    <p>Every integration with an AI agent had to be done individually:</p>
+                    <svg viewBox="0 0 900 320" style="width: 100%; margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="340" y="20" width="220" height="60" rx="12" fill="#edf4fc" stroke="#0078D4" stroke-width="2"/>
+                        <text x="450" y="58" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#2b2b2b">🤖 AI agent</text>
+                        <path d="M380 80 L380 120 L130 120 L130 250" fill="none" stroke="#2b2b2b" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+                        <line x1="450" y1="80" x2="450" y2="250" stroke="#2b2b2b" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+                        <path d="M520 80 L520 120 L770 120 L770 250" fill="none" stroke="#2b2b2b" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+                        <path d="M380 80 L380 120 L130 120 L130 232" fill="none" stroke="#50e6ff" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 20" opacity="0.9">
+                            <animate attributeName="stroke-dashoffset" from="0" to="-140" dur="4s" repeatCount="indefinite"/>
+                        </path>
+                        <line x1="450" y1="80" x2="450" y2="232" stroke="#50e6ff" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 20" opacity="0.9">
+                            <animate attributeName="stroke-dashoffset" from="0" to="-100" dur="3.2s" repeatCount="indefinite"/>
+                        </line>
+                        <path d="M520 80 L520 120 L770 120 L770 232" fill="none" stroke="#50e6ff" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 20" opacity="0.9">
+                            <animate attributeName="stroke-dashoffset" from="0" to="-140" dur="3.6s" repeatCount="indefinite"/>
+                        </path>
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#2b2b2b"/>
+                            </marker>
+                        </defs>
+                        <text x="130" y="290" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#2b2b2b">🗄️ Database</text>
+                        <text x="450" y="290" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#2b2b2b">💬 Slack</text>
+                        <text x="770" y="290" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#2b2b2b">🐙 GitHub</text>
+                        <rect x="213" y="107" width="84" height="26" rx="13" fill="#fff" stroke="#ccc" stroke-width="1"/>
+                        <text x="255" y="124" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" fill="#555" font-weight="600">REST API</text>
+                        <rect x="418" y="133" width="64" height="26" rx="13" fill="#fff" stroke="#ccc" stroke-width="1"/>
+                        <text x="450" y="150" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" fill="#555" font-weight="600">SDK</text>
+                        <rect x="613" y="107" width="64" height="26" rx="13" fill="#fff" stroke="#ccc" stroke-width="1"/>
+                        <text x="645" y="124" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" fill="#555" font-weight="600">CLI</text>
+                    </svg>
+                </section>
+
+                <section>
+                    <h3>Model Context Protocol</h3>
+                    <p>An open protocol that defines how AI apps get context from external tools and data sources.</p>
+                    <svg viewBox="0 0 900 300" style="width: 100%; margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="340" y="20" width="220" height="60" rx="12" fill="#edf4fc" stroke="#0078D4" stroke-width="2"/>
+                        <text x="450" y="58" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#2b2b2b">🤖 AI agent</text>
+                        <defs>
+                            <marker id="arrowhead2" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#2b2b2b"/>
+                            </marker>
+                        </defs>
+                        <path d="M380 80 L380 120 L130 120 L130 210" fill="none" stroke="#2b2b2b" stroke-width="2.5" marker-end="url(#arrowhead2)"/>
+                        <line x1="450" y1="80" x2="450" y2="210" stroke="#2b2b2b" stroke-width="2.5" marker-end="url(#arrowhead2)"/>
+                        <path d="M520 80 L520 120 L770 120 L770 210" fill="none" stroke="#2b2b2b" stroke-width="2.5" marker-end="url(#arrowhead2)"/>
+                        <path d="M380 80 L380 120 L130 120 L130 192" fill="none" stroke="#50e6ff" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 20" opacity="0.9">
+                            <animate attributeName="stroke-dashoffset" from="0" to="-140" dur="4s" repeatCount="indefinite"/>
+                        </path>
+                        <line x1="450" y1="80" x2="450" y2="192" stroke="#50e6ff" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 20" opacity="0.9">
+                            <animate attributeName="stroke-dashoffset" from="0" to="-100" dur="3.2s" repeatCount="indefinite"/>
+                        </line>
+                        <path d="M520 80 L520 120 L770 120 L770 192" fill="none" stroke="#50e6ff" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 20" opacity="0.9">
+                            <animate attributeName="stroke-dashoffset" from="0" to="-140" dur="3.6s" repeatCount="indefinite"/>
+                        </path>
+                        <text x="130" y="250" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#2b2b2b">🗄️ Database</text>
+                        <text x="450" y="250" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#2b2b2b">💬 Slack</text>
+                        <text x="770" y="250" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#2b2b2b">🐙 GitHub</text>
+                        <g transform="translate(255 120)"><animate attributeName="opacity" values="1;0.88;1" dur="2.2s" repeatCount="indefinite"/><rect x="-30" y="-13" width="60" height="26" rx="13" fill="#fff" stroke="#0078D4" stroke-width="1.8"/><text x="0" y="5" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#0078D4" font-weight="700">MCP</text></g>
+                        <g transform="translate(450 146)"><animate attributeName="opacity" values="1;0.88;1" dur="2.2s" begin="0.35s" repeatCount="indefinite"/><rect x="-30" y="-13" width="60" height="26" rx="13" fill="#fff" stroke="#0078D4" stroke-width="1.8"/><text x="0" y="5" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#0078D4" font-weight="700">MCP</text></g>
+                        <g transform="translate(645 120)"><animate attributeName="opacity" values="1;0.88;1" dur="2.2s" begin="0.7s" repeatCount="indefinite"/><rect x="-30" y="-13" width="60" height="26" rx="13" fill="#fff" stroke="#0078D4" stroke-width="1.8"/><text x="0" y="5" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#0078D4" font-weight="700">MCP</text></g>
+                    </svg>
+
+                </section>
+
+                <section>
+                    <h3>MCP architecture</h3>
+                    <svg viewBox="0 0 1100 560" style="width: 100%; margin: -65px auto 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="serverPanelGradient" x1="0" y1="0" x2="1" y2="1">
+								<stop offset="0%" stop-color="#f4feff"/>
+								<stop offset="100%" stop-color="#d7f8ff"/>
+                            </linearGradient>
+                            <marker id="archArrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+								<path d="M0,0 L6,3 L0,6 z" fill="#32115f"/>
+                            </marker>
+                        </defs>
+
+						<rect x="28" y="66" width="320" height="490" rx="54" fill="#c9f7ff" stroke="#21e8f3" stroke-width="3"/>
+                        <text x="188" y="128" text-anchor="middle" font-family="Outfit, sans-serif" font-size="30" font-weight="700" fill="#111827">MCP Host</text>
+                        <text x="188" y="160" text-anchor="middle" font-family="Inter, sans-serif" font-size="24" font-style="italic" fill="#111827">GitHub Copilot, Claude,</text>
+                        <text x="188" y="190" text-anchor="middle" font-family="Inter, sans-serif" font-size="24" font-style="italic" fill="#111827">ChatGPT...</text>
+
+						<rect x="58" y="214" width="260" height="72" rx="14" fill="#0086a3" stroke="#21e8f3" stroke-width="2.5"/>
+                        <text x="188" y="258" text-anchor="middle" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#ffffff">MCP Client A</text>
+
+						<rect x="58" y="424" width="260" height="72" rx="14" fill="#0086a3" stroke="#21e8f3" stroke-width="2.5"/>
+                        <text x="188" y="468" text-anchor="middle" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#ffffff">MCP Client B</text>
+
+						<rect x="590" y="160" width="450" height="180" rx="18" fill="url(#serverPanelGradient)" stroke="#21e8f3" stroke-width="2.5"/>
+						<text x="815" y="214" text-anchor="middle" font-family="Outfit, sans-serif" font-size="31" font-weight="700" fill="#32115f">MCP Server A</text>
+						<rect x="614" y="260" width="110" height="50" rx="10" fill="#009bb8"/>
+						<rect x="744" y="260" width="130" height="50" rx="10" fill="#009bb8"/>
+						<rect x="894" y="260" width="130" height="50" rx="10" fill="#009bb8"/>
+
+						<rect x="590" y="380" width="450" height="180" rx="18" fill="url(#serverPanelGradient)" stroke="#21e8f3" stroke-width="2.5"/>
+						<text x="815" y="434" text-anchor="middle" font-family="Outfit, sans-serif" font-size="31" font-weight="700" fill="#32115f">MCP Server B</text>
+						<rect x="614" y="480" width="110" height="50" rx="10" fill="#009bb8"/>
+						<rect x="744" y="480" width="130" height="50" rx="10" fill="#009bb8"/>
+						<rect x="894" y="480" width="130" height="50" rx="10" fill="#009bb8"/>
+                        <text x="669" y="293" text-anchor="middle" font-family="Inter, sans-serif" font-size="22" fill="#ffffff">Tools</text>
+                        <text x="809" y="293" text-anchor="middle" font-family="Inter, sans-serif" font-size="22" fill="#ffffff">Prompts</text>
+                        <text x="959" y="293" text-anchor="middle" font-family="Inter, sans-serif" font-size="22" fill="#ffffff">Resources</text>
+                        <text x="669" y="513" text-anchor="middle" font-family="Inter, sans-serif" font-size="22" fill="#ffffff">Tools</text>
+                        <text x="809" y="513" text-anchor="middle" font-family="Inter, sans-serif" font-size="22" fill="#ffffff">Prompts</text>
+                        <text x="959" y="513" text-anchor="middle" font-family="Inter, sans-serif" font-size="22" fill="#ffffff">Resources</text>
+
+						<line x1="348" y1="250" x2="590" y2="250" stroke="#32115f" stroke-width="5" marker-end="url(#archArrow)"/>
+						<line x1="348" y1="460" x2="590" y2="460" stroke="#32115f" stroke-width="5" marker-end="url(#archArrow)"/>
+
+						<line x1="348" y1="250" x2="572" y2="250" stroke="#21e8f3" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 14" opacity="0.95">
+                            <animate attributeName="stroke-dashoffset" from="0" to="-64" dur="2.2s" repeatCount="indefinite"/>
+                        </line>
+						<line x1="348" y1="460" x2="572" y2="460" stroke="#21e8f3" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 14" opacity="0.95">
+                            <animate attributeName="stroke-dashoffset" from="0" to="-64" dur="2.2s" begin="0.4s" repeatCount="indefinite"/>
+                        </line>
+
+                        <g transform="translate(470 250)">
+                            <animate attributeName="opacity" values="1;0.88;1" dur="2.2s" repeatCount="indefinite"/>
+							<rect x="-38" y="-15" width="76" height="30" rx="15" fill="#effdff" stroke="#00bcd4" stroke-width="2.2"/>
+							<text x="0" y="5" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" fill="#006a7c" font-weight="700">MCP</text>
+                        </g>
+
+                        <g transform="translate(470 460)">
+                            <animate attributeName="opacity" values="1;0.88;1" dur="2.2s" begin="0.35s" repeatCount="indefinite"/>
+							<rect x="-38" y="-15" width="76" height="30" rx="15" fill="#effdff" stroke="#00bcd4" stroke-width="2.2"/>
+							<text x="0" y="5" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" fill="#006a7c" font-weight="700">MCP</text>
+                        </g>
+                    </svg>
+                    <aside class="notes">
+                        MCP hosts like VS Code contain MCP clients that connect to servers. Servers expose tools (functions the LLM can call), resources (read-only data), and prompts (instruction templates).
+                    </aside>
+                </section>
 
 				<section>
-					<h3>The basic request flow</h3>
-					<ol class="tight">
-						<li>The host starts or connects to an MCP server.</li>
-						<li>The client asks the server what it supports.</li>
-						<li>The model chooses a tool, resource, or prompt when it needs one.</li>
-						<li>The user approves calls when the host requires confirmation.</li>
-						<li>The server returns structured results for the model to use.</li>
-					</ol>
-				</section>
-
-				<section>
-					<h3>Core building blocks</h3>
-					<div class="three-column">
-						<div class="box">
-							<h4>Tools</h4>
-							<p>Actions the model can call, such as searching docs, buying a product, or filing an issue.</p>
-						</div>
-						<div class="box">
-							<h4>Resources</h4>
-							<p>Readable context, such as files, inventory, database records, or generated documents.</p>
-						</div>
-						<div class="box">
-							<h4>Prompts</h4>
-							<p>Reusable prompt templates that help clients start useful model interactions.</p>
-						</div>
-					</div>
-				</section>
-
-				<section>
-					<h3>Exercise 1: connect to existing servers</h3>
-					<p class="lead">Use a coding agent to connect to public MCP servers, then try one authenticated MCP server.</p>
+					<h3>MCP clients</h3>
+					<p class="lead">Of the 113 clients listed on <a target="_blank" href="https://modelcontextprotocol.io/clients">modelcontextprotocol.io/clients</a>, support for the full MCP spec is highly variable:</p>
 					<table>
 						<thead>
-							<tr><th>Server</th><th>URL</th><th>Use case</th></tr>
+							<tr><th>Capability</th><th>What it means</th><th>Support</th></tr>
 						</thead>
 						<tbody>
-							<tr><td>DeepWiki</td><td><code>https://mcp.deepwiki.com/mcp</code></td><td>Repository documentation</td></tr>
-							<tr><td>Microsoft Learn</td><td><code>https://learn.microsoft.com/api/mcp</code></td><td>Microsoft docs</td></tr>
-							<tr><td>GitHub</td><td>Configured by client</td><td>Authenticated repo workflows</td></tr>
+							<tr><td>Tools</td><td>Agent can discover and call server functions</td><td>All</td></tr>
+							<tr><td>Prompts</td><td>Server exposes reusable prompt templates</td><td>43/113</td></tr>
+							<tr><td>Resources</td><td>User or host can attach read-only context</td><td>47/113</td></tr>
+							<tr><td>OAuth with DCR</td><td>Client can complete dynamic auth setup</td><td>16/113</td></tr>
+							<tr><td>Elicitation</td><td>Server can ask the user for structured input</td><td>16/113</td></tr>
+							<tr><td>Apps</td><td>Client can render app/UI responses</td><td>10/113</td></tr>
 						</tbody>
 					</table>
+					<aside class="notes">
+						Tools are the common denominator. For this tutorial, warn attendees that behavior may differ by coding agent, especially for newer MCP features like resources, prompts, elicitation, apps, and OAuth.
+					</aside>
 				</section>
 
-				<section class="no-code-badge">
-					<h3>Copilot MCP configuration</h3>
-					<pre><code class="language-json" data-trim data-noescape>
-{
-  "servers": {
-    "deepwiki": {
+				<section>
+					<img src="../vscode.svg" alt="Visual Studio Code logo" style="position: absolute; top: 38px; right: 70px; width: 88px; height: 88px; z-index: 1;">
+					<h3>MCP client: VS Code</h3>
+					<p class="lead" style="max-width: none; margin: 0 0 24px;">VS Code (+ GitHub Copilot) supports nearly all of the <a target="_blank" href="https://modelcontextprotocol.io/specification">MCP specification</a>.</p>
+					<div style="display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr); gap: 30px; align-items: stretch;">
+						<div class="client-panel">
+							<h4>1. Add MCP servers</h4>
+							<p>Install from Extensions:</p>
+							<img class="client-shot" src="../screenshot_vscode_mcpextensions2.png" alt="VS Code extensions marketplace search results for MCP servers" style="width: 68%; margin: 0 0 0.7em 0;">
+							<p>Or configure <code>.mcp.json</code> file:</p>
+								<pre style="width: 95%; padding: 8px 10px; background: rgba(255, 219, 136, 0.28); box-shadow: 0 0 18px rgba(255, 219, 136, 0.28); border-color: transparent;"><code class="language-json" style="font-size: 0.9em; line-height: 1.2;">{
+	"mcpServers": {
+    "github": {
       "type": "http",
-      "url": "https://mcp.deepwiki.com/mcp"
+      "url": "https://api.githubcopilot.com/mcp/"
     }
   }
-}
-					</code></pre>
-					<p class="muted">Then ask: "Explain how PrefectHQ/fastmcp handles tool registration internally."</p>
+}</code></pre>
+						</div>
+						<div class="client-panel">
+							<h4>2. Use from Copilot</h4>
+							<p>Once added, tools appear in chat with approvals and structured results.</p>
+							<img class="client-shot" src="../screenshot_vscode_githubmcp.png" alt="GitHub Copilot chat using a GitHub MCP server tool in VS Code" style="width: 86%; margin: 0 auto;">
+						</div>
+					</div>
+					<aside class="notes">
+						Demo this live in VS Code. Show both ways to add an MCP server: install one from Extensions, then point out the <code>.mcp.json</code> configuration option. After that, open Copilot Chat and show the MCP tools available with approval prompts/results.
+					</aside>
+				</section>
+
+				<section>
+					<h3>MCP client: Claude Code</h3>
+					<p class="lead" style="max-width: none; margin: 0 0 24px;">Claude Code connects terminal-first coding workflows to MCP servers.</p>
+					<div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 30px; align-items: stretch;">
+						<div class="client-panel">
+							<h4>1. Add MCP servers</h4>
+							<p>Add remote servers from the CLI:</p>
+							<pre style="width: 95%; padding: 10px 12px; background: rgba(255, 219, 136, 0.28); box-shadow: 0 0 18px rgba(255, 219, 136, 0.28); border-color: transparent;"><code class="language-bash" style="font-size: 0.82em; line-height: 1.25;">claude mcp add \
+	--transport http huggingface \
+	'https://huggingface.co/mcp?login'</code></pre>
+							<p style="margin-top: 0.75em;">Then confirm what Claude Code can see:</p>
+							<pre style="width: 70%; padding: 10px 12px; background: rgba(255, 219, 136, 0.28); box-shadow: 0 0 18px rgba(255, 219, 136, 0.28); border-color: transparent;"><code class="language-bash" style="font-size: 0.82em; line-height: 1.25;">claude mcp list</code></pre>
+
+                            <p style="margin-top: 0.75em;">For authenticated servers, you will need to start up <code>claude</code> to go through the auth flow.</p>
+						</div>
+						<div class="client-panel">
+							<h4>2. Use from Claude Code</h4>
+							<p>Ask in the terminal, and Claude Code can call Hugging Face tools through MCP.</p>
+							<pre style="width: 95%; padding: 10px 12px; background: rgba(33, 232, 243, 0.12); box-shadow: 0 0 18px rgba(33, 232, 243, 0.22); border-color: rgba(33, 232, 243, 0.5);"><code class="language-text" style="font-size: 0.76em; line-height: 1.26;">&gt; what research papers are in 2026
+	about vector retrieval?
+
+⏺ huggingface - Paper Search (MCP)
+	query: "vector retrieval 2026"
+	concise_only: true
+
+120 papers matched the query.
+Here are the first 12 results.
+
+## Foundations of Vector Retrieval</code></pre>
+						</div>
+					</div>
+					<aside class="notes">
+						Demo this live in Claude Code. Run the <code>claude mcp add</code> command for Hugging Face, then start <code>claude</code> to complete the login/auth flow. Ask the paper-search question and show Claude Code calling the Hugging Face MCP tool in the terminal.
+					</aside>
 				</section>
 
 				<section class="heading-only">
 					<h2>Agents + MCP</h2>
-					<p style="font-size: 0.86em; max-width: 760px;">Now the agent code becomes the MCP client.</p>
-				</section>
-
-				<section>
-					<h3>What is an agent framework?</h3>
-					<p class="lead">An agent framework coordinates model calls, tool schemas, tool execution, memory or state, and final responses.</p>
-					<div class="two-column">
-						<div>
-							<p><strong>The model decides</strong></p>
-							<ul class="tight">
-								<li>When it needs a tool</li>
-								<li>Which arguments to send</li>
-								<li>How to use the result</li>
-							</ul>
-						</div>
-						<div>
-							<p><strong>The framework manages</strong></p>
-							<ul class="tight">
-								<li>Tool registration</li>
-								<li>Async execution</li>
-								<li>Retries and final output</li>
-							</ul>
-						</div>
-					</div>
-				</section>
-
-				<section>
-					<h3>Exercise 2: choose one framework</h3>
-					<table>
-						<thead>
-							<tr><th>Option</th><th>What you will wire up</th><th>Good for</th></tr>
-						</thead>
-						<tbody>
-							<tr><td>Pydantic AI</td><td><code>MCPServerStreamableHTTP</code></td><td>Typed Python agents</td></tr>
-							<tr><td>LangChain v1</td><td><code>MultiServerMCPClient</code></td><td>Broad ecosystem support</td></tr>
-							<tr><td>Microsoft Agent Framework</td><td>MCP tool integration</td><td>.NET and Python agent apps</td></tr>
-						</tbody>
-					</table>
 					<aside class="notes">
-						This is the first part most likely to be affected by LLM provider setup. Keep it focused and be ready to turn it into a bonus section if network or key setup drags.
+						Now that we have seen coding agents use MCP, let's look at the architecture behind them.
 					</aside>
 				</section>
 
-				<section class="no-code-badge">
-					<h3>Shared LLM environment</h3>
-					<pre><code class="language-text" data-trim data-noescape>
-LLM_BASE_URL=https://openrouter.ai/api/v1
-LLM_API_KEY=&lt;your API key&gt;
-LLM_MODEL_NAME=google/gemma-3-27b-it
-					</code></pre>
-					<p class="muted">The same three variables work across the exercise options.</p>
+				<section>
+					<h3>What is an agent?</h3>
+					<div style="display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: 34px; align-items: center;">
+						<div style="border: 1px solid rgba(33, 232, 243, 0.5); border-radius: 8px; background: rgba(255, 255, 255, 0.62); padding: 22px 26px; min-height: 380px; box-sizing: border-box;">
+							<div style="font-size: 0.58em; font-weight: 700; color: var(--deck-heading); margin-bottom: 14px;">Agent loop</div>
+							<svg viewBox="0 0 480 350" role="img" aria-label="Agent loop from user query to LLM, tools, and goal" style="width: 100%; height: auto; display: block;">
+								<defs>
+									<marker id="agent-arrow" markerWidth="7" markerHeight="7" refX="6" refY="2.5" orient="auto" markerUnits="strokeWidth">
+										<path d="M0,0 L0,5 L7,2.5 z" fill="#32115f"></path>
+									</marker>
+								</defs>
+								<rect x="54" y="18" width="142" height="54" rx="8" fill="#fffaf1" stroke="#ffd66b" stroke-width="3"></rect>
+								<text x="125" y="52" text-anchor="middle" font-size="22" font-weight="700" fill="#20152f">User query</text>
+								<line x1="125" y1="72" x2="125" y2="128" stroke="#32115f" stroke-width="4" marker-end="url(#agent-arrow)"></line>
+								<rect x="75" y="138" width="100" height="62" rx="6" fill="#5f51bd"></rect>
+								<text x="125" y="177" text-anchor="middle" font-size="26" font-weight="700" fill="#fff">LLM</text>
+								<line x1="125" y1="200" x2="125" y2="262" stroke="#32115f" stroke-width="4" marker-end="url(#agent-arrow)"></line>
+								<rect x="54" y="272" width="142" height="54" rx="8" fill="rgba(255, 50, 200, 0.1)" stroke="#ff32c8" stroke-width="3"></rect>
+								<text x="125" y="306" text-anchor="middle" font-size="22" font-weight="700" fill="#20152f">Goal</text>
+								<rect x="305" y="126" width="126" height="86" rx="10" fill="#eefbff" stroke="#21e8f3" stroke-width="3"></rect>
+								<text x="368" y="160" text-anchor="middle" font-size="24" font-weight="700" fill="#20152f">Tools</text>
+								<text x="368" y="190" text-anchor="middle" font-size="17" fill="#6b4d78">MCP, APIs, files</text>
+								<path d="M176 157 C232 114, 292 115, 321 133" fill="none" stroke="#32115f" stroke-width="4" marker-end="url(#agent-arrow)"></path>
+								<path d="M309 202 C262 239, 207 236, 169 195" fill="none" stroke="#32115f" stroke-width="4" marker-end="url(#agent-arrow)"></path>
+								<text x="276" y="256" text-anchor="middle" font-size="18" font-weight="700" fill="#32115f">inspect results, then continue</text>
+							</svg>
+						</div>
+						<div>
+							<p style="font-size: 0.96em; line-height: 1.25; margin-top: 0;">An <strong>AI agent</strong> uses an <strong>LLM</strong> to run <strong>tools</strong> in a loop to achieve a <strong>goal</strong>.</p>
+							<p style="font-size: 0.76em; margin-top: 1.4em; margin-bottom: 0.35em;">Agents are often augmented by:</p>
+							<ul class="tight" style="font-size: 0.84em; margin-top: 0;">
+								<li>Context from files, docs, or databases</li>
+								<li>Memory across a session or project</li>
+								<li>Planning and tool selection</li>
+								<li>Human approvals and feedback</li>
+							</ul>
+							<p class="muted" style="font-size: 0.7em; margin-top: 2em;"><a target="_blank" href="https://simonwillison.net/2025/Sep/18/agents/">simonwillison.net/2025/Sep/18/agents/</a></p>
+						</div>
+					</div>
+					<p style="font-size: 0.9em; line-height: 1.25; margin: 18px 0 0; padding: 10px 14px; border-left: 5px solid var(--deck-pink); background: rgba(255, 255, 255, 0.58);"><strong>Coding agents</strong> like GitHub Copilot and Claude Code are AI agents.<br>AI agents can also be built programmatically in Python.</p>
+					<aside class="notes">
+						Use the demos as the concrete examples: VS Code Copilot and Claude Code are both agents. They receive a goal, decide whether tools are useful, call them, inspect the response, and keep working.
+					</aside>
+				</section>
+
+				<section>
+					<h3>Agent with MCP servers</h3>
+					<p class="lead" style="max-width: none; margin-bottom: 8px;">First the agent queries each MCP server to discover its tools.</p>
+					<svg viewBox="0 0 1120 405" role="img" aria-label="Single agent discovering MCP server tools and choosing which tool to call" style="width: 100%; height: auto; display: block;">
+						<defs>
+							<marker id="mcp-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+								<path d="M0,0 L0,6 L9,3 z" fill="#20152f"></path>
+							</marker>
+							<marker id="mcp-dashed-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+								<path d="M0,0 L0,6 L9,3 z" fill="#32115f"></path>
+							</marker>
+						</defs>
+						<rect x="38" y="30" width="98" height="82" rx="10" fill="#fffaf1" stroke="#ffd66b" stroke-width="3"></rect>
+						<text x="87" y="67" text-anchor="middle" font-size="21" font-weight="700" fill="#32115f">Agent</text>
+						<text x="87" y="94" text-anchor="middle" font-size="17" fill="#6b4d78">client</text>
+						<line x1="156" y1="55" x2="760" y2="55" stroke="#20152f" stroke-width="3" marker-end="url(#mcp-arrow)"></line>
+						<text x="456" y="43" text-anchor="middle" font-size="24" fill="#20152f">tools?</text>
+						<line x1="760" y1="96" x2="156" y2="96" stroke="#20152f" stroke-width="3" marker-end="url(#mcp-arrow)"></line>
+						<text x="456" y="116" text-anchor="middle" font-size="24" fill="#20152f">Tool X, Tool Y</text>
+						<rect x="790" y="26" width="290" height="58" rx="6" fill="#6ef0ce"></rect>
+						<text x="935" y="64" text-anchor="middle" font-size="26" font-weight="700" fill="#20152f">MCP Server A</text>
+						<line x1="156" y1="158" x2="760" y2="158" stroke="#20152f" stroke-width="3" marker-end="url(#mcp-arrow)"></line>
+						<text x="456" y="150" text-anchor="middle" font-size="24" fill="#20152f">tools?</text>
+						<line x1="760" y1="199" x2="156" y2="199" stroke="#20152f" stroke-width="3" marker-end="url(#mcp-arrow)"></line>
+						<text x="456" y="226" text-anchor="middle" font-size="24" fill="#20152f">Tool Z</text>
+						<rect x="790" y="130" width="290" height="58" rx="6" fill="#b9d0f6"></rect>
+						<text x="935" y="168" text-anchor="middle" font-size="26" font-weight="700" fill="#20152f">MCP Server B</text>
+						<text x="38" y="260" font-size="27" fill="#20152f">Then the agent decides which MCP tool to call.</text>
+						<rect x="92" y="305" width="128" height="56" rx="6" fill="#5f51bd"></rect>
+						<text x="156" y="341" text-anchor="middle" font-size="27" font-weight="700" fill="#fff">LLM</text>
+						<line x1="220" y1="333" x2="780" y2="296" stroke="#32115f" stroke-width="2.5" stroke-dasharray="8 7" marker-end="url(#mcp-dashed-arrow)"></line>
+						<line x1="220" y1="333" x2="780" y2="333" stroke="#32115f" stroke-width="2.5" stroke-dasharray="8 7" marker-end="url(#mcp-dashed-arrow)"></line>
+						<line x1="220" y1="333" x2="780" y2="370" stroke="#32115f" stroke-width="2.5" stroke-dasharray="8 7" marker-end="url(#mcp-dashed-arrow)"></line>
+						<ellipse cx="850" cy="294" rx="78" ry="26" fill="#6ef0ce"></ellipse>
+						<text x="850" y="302" text-anchor="middle" font-size="18" font-weight="700" fill="#20152f">Tool X</text>
+						<ellipse cx="850" cy="333" rx="78" ry="26" fill="#6ef0ce"></ellipse>
+						<text x="850" y="341" text-anchor="middle" font-size="18" font-weight="700" fill="#20152f">Tool Y</text>
+						<ellipse cx="850" cy="372" rx="78" ry="26" fill="#b9d0f6"></ellipse>
+						<text x="850" y="380" text-anchor="middle" font-size="18" font-weight="700" fill="#20152f">Tool Z</text>
+					</svg>
+					<aside class="notes">
+						Connect this back to the previous demos: when Copilot or Claude Code starts using MCP, it discovers tools from connected servers, then the model chooses from those tools during the agent loop.
+					</aside>
+				</section>
+
+				<section>
+					<h3>Building agents with frameworks</h3>
+					<p class="lead">An agent framework coordinates model calls, tool schemas, tool execution, memory or state, and final responses.</p>
+					<table style="font-size: 0.9em; margin-top: 16px;">
+						<thead>
+							<tr><th>Framework</th><th>Description</th></tr>
+						</thead>
+						<tbody>
+							<tr><td><strong>agent-framework</strong></td><td>A framework from Microsoft with support for agentic patterns and full integration with Azure offerings. Successor to AutoGen and Semantic Kernel.</td></tr>
+							<tr><td><strong>langchain v1</strong></td><td>An agent-centric framework built on top of LangGraph, with optional LangSmith monitoring.</td></tr>
+							<tr><td><strong>pydantic-ai</strong></td><td>A flexible framework designed for type safety and observability, from the creators of Pydantic.</td></tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section>
+					<div style="position: absolute; top: 38px; right: 58px; font-size: 0.72em; font-weight: 700; color: var(--deck-heading); padding: 8px 14px; border: 2px solid rgba(255, 50, 200, 0.45); border-radius: 8px; background: rgba(255, 255, 255, 0.72);">⏳ 30 min</div>
+					<h3>Exercise time</h3>
+					<p><strong>Exercise 1:</strong><br>
+                        Connect your coding agent to public MCP servers<br>
+                        <a href="https://tinyurl.com/pyconmcp-ex1" target="_blank"><code>tinyurl.com/pyconmcp-ex1</code></a>
+                        </p>
+					<div>
+						<p><strong>Bonus: Exercise 2</strong><br>
+                        Build a Python agent that uses MCP servers<br>
+                        <a href="https://tinyurl.com/pyconmcp-ex2" target="_blank"><code>tinyurl.com/pyconmcp-ex2</code></a>
+                        </p>
+					</div>
+
+                    <p>🙋🏽‍♀️ 🙋🏻‍♂️ 🙋🏿 🙋🏼‍♀️ 🙋🏾‍♂️ Got a question? Raise your hand, we'll come around!</p>
+					<aside class="notes">
+						Give attendees time to work through exercise1.md. Mention exercise2.md as an optional bonus for anyone who wants to build a programmatic Python agent that connects to MCP servers.
+					</aside>
 				</section>
 
 				<section class="heading-only">
@@ -769,6 +1078,16 @@ mcp = FastMCP("Pamela's Bakery", auth=auth)
 				plugins: [RevealHighlight, RevealMenu],
 				pdfSeparateFragments: true
 			});
+
+			function updateTitleSlideBackground(event) {
+				const revealElement = document.querySelector('.reveal');
+				const currentSlide = event && event.currentSlide ? event.currentSlide : Reveal.getCurrentSlide();
+				revealElement.classList.toggle('title-slide-active', currentSlide.classList.contains('title-slide'));
+			}
+
+			Reveal.on('ready', updateTitleSlideBackground);
+			Reveal.on('slidechanged', updateTitleSlideBackground);
+			updateTitleSlideBackground();
 		</script>
 	</body>
 </html>

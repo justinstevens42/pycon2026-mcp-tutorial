@@ -92,6 +92,9 @@ Set up **one** of the coding agents from instructions below, either [GitHub Copi
 
    ![Screenshot of chat box with "Agent" mode selected](screenshot_copilot_agent.png)
 
+4. Send a test message "Hello" to confirm the agent is working.
+5. Move on to [Step 3](#step-3-use-a-public-mcp-server-no-auth)
+
 ### Option B: GitHub Copilot CLI
 
 > You need a [GitHub Copilot subscription](https://github.com/features/copilot) for this option.
@@ -103,9 +106,11 @@ Set up **one** of the coding agents from instructions below, either [GitHub Copi
    copilot
    ```
 
+3. Move on to [Step 3](#step-3-use-a-public-mcp-server-no-auth)
+
 ### Option C: Claude Code
 
-> You need a [Claude Code](https://code.claude.com/) subscription for this option.
+> You need a [Claude Code](https://code.claude.com/) subscription for this option. For more details on MCP in Claude Code, see the [Claude Code MCP docs](https://code.claude.com/docs/en/mcp).
 
 1. Install Claude Code by following the [installation guide](https://code.claude.com/docs/en/overview).
 2. Verify the installation:
@@ -114,7 +119,7 @@ Set up **one** of the coding agents from instructions below, either [GitHub Copi
    claude
    ```
 
-For more details on MCP in Claude Code, see the [Claude Code MCP docs](https://code.claude.com/docs/en/mcp).
+3. Move on to [Step 3](#step-3-use-a-public-mcp-server-no-auth)
 
 ---
 
@@ -132,12 +137,12 @@ Follow the instructions for your agent:
 
 ### Copilot in VS Code — public server
 
-1. Open (or create) the file `.vscode/mcp.json` in your workspace and make sure it contains a server configuration pointed at the remote MCP server URL:
+1. Open (or create) the file `.mcp.json` in your workspace and make sure it contains a server configuration pointed at the remote MCP server URL:
 
 
    ```json
    {
-     "servers": {
+   "mcpServers": {
        "deepwiki": {
          "type": "http",
          "url": "https://mcp.deepwiki.com/mcp"
@@ -146,15 +151,17 @@ Follow the instructions for your agent:
    }
    ```
 
-2. In the Copilot Chat panel, click the tools icon (🔧) to confirm the server tools are listed.
+2. Select "Start" on the server in the config file. 
+
+3. In the Copilot Chat panel, click the tools icon (🔧) to confirm the server tools are listed.
 
    ![Screenshot of tools listing for remote-mcp-server](screenshot_copilot_tools.png)
 
-3. Ask a question that can be answered by the MCP server:
+4. Ask a question that can be answered by the MCP server:
 
    > Explain how PrefectHQ/fastmcp handles tool registration internally.
 
-4. Approve the MCP tool call and review the grounded answer.
+5. Approve the MCP tool call and review the grounded answer.
 
 ### Copilot CLI — public server
 
@@ -194,70 +201,126 @@ Follow the instructions for your agent:
 
 ---
 
-## Step 4: Use an authenticated MCP server (GitHub)
+## Step 4: Use an authenticated MCP server
 
-> You need a [GitHub account](https://github.com) for this step. If you do not have one, you can try other [remote servers that require OAuth](https://mcpservers.org/remote-mcp-servers).
+The goal of this step is to show you what it's like to use an MCP server that requires authentication via the MCP Auth (OAuth2) flow.
+The recommendation is to use the [Hugging Face MCP server](https://huggingface.co/mcp), as it is easy to create an account there if you don't yet have one, but you can also try other [remote servers that require OAuth](https://mcpservers.org/remote-mcp-servers). Just change the URL as needed.
 
-The [GitHub MCP server](https://github.com/github/github-mcp-server) requires authentication. When you start the server, your coding agent will take you through an OAuth login flow.
+### Copilot in VS Code with authenticated server
 
-### Copilot in VS Code — GitHub server
+1. Make sure that `.mcp.json` contains a server configuration pointed at the Hugging Face MCP server URL:
 
-1. Make sure that `.vscode/mcp.json` contains a server configuration pointed at the GitHub MCP server URL:
-
-   ```json
-   {
-     "servers": {
-       "github": {
-         "type": "http",
-         "url": "https://api.githubcopilot.com/mcp/"
+    ```json
+    {
+       "mcpServers": {
+          "huggingface": {
+             "type": "http",
+             "url": "https://huggingface.co/mcp?login"
+          }
        }
-     }
-   }
-   ```
+    }
+    ```
 
 2. Select "Start" on the server in the config file. 
 
-   ![Screenshot of Start button in config file](screenshot_copilot_github_start.png)
+   ![Screenshot of Start button for Hugging Face MCP server in VS Code](screenshot_vscode_hf_startserver.png)
 
-3. A prompt will pop-up that asks you to authenticate. Follow that flow.
+3. A prompt will pop up asking whether the MCP server can authenticate to Hugging Face. Select **Allow**.
 
-   ![Screenshot of prompt to auth to GitHub MCP server](screenshot_copilot_github_auth.png)
+   ![Screenshot of VS Code prompt asking to allow Hugging Face authentication](screenshot_vscode_hf_auth_allow.png)
 
-4. Click the tools icon (🔧) and confirm the GitHub tools are listed and enabled. 
+4. VS Code will ask whether it can open the external Hugging Face authorization website. Select **Open**.
 
-   ![Screenshot of GitHub MCP server tools listing](screenshot_copilot_github_tools.png)
+   ![Screenshot of VS Code prompt asking to open the Hugging Face authorization website](screenshot_vscode_hf_auth_redirect.png)
 
-3. Ask Copilot a question that uses GitHub context:
+5. If you are not yet logged into Hugging Face, login or sign-in on the page that pops up.
 
-   > What are the top 5 open issues in PrefectHQ/fastmcp?
+   ![Screenshot of Hugging Face login](screenshot_claudecode_hf_login.png)
 
-### Copilot CLI — GitHub server
+6. In the browser, select **Authorize** to grant VS Code access to Hugging Face MCP tools.
 
-1. Add the GitHub MCP server using the CLI:
+   ![Screenshot of Hugging Face authorization screen for Visual Studio Code](screenshot_vscode_hf_consent_screen.png)
 
-   ```bash
-   copilot mcp add --transport http github https://api.githubcopilot.com/mcp/
-   ```
+7. After authorization, the browser will ask to reopen VS Code. Select **Open**.
 
-2. Query the server:
+   ![Screenshot of browser prompt asking to reopen Visual Studio Code](screenshot_vscode_hf_reopen_vscode.png)
 
-   ```bash
-   copilot -i "What are the top 5 open issues in PrefectHQ/fastmcp?"
-   ```
+8. Back in VS Code, confirm the Hugging Face MCP server is running.
 
-3. Follow the authentication prompt if required.
+   ![Screenshot of Hugging Face MCP server running in VS Code](screenshot_vscode_hf_successful.png)
 
-### Claude Code — GitHub server
+9. Click the tools icon (🔧) and confirm the Hugging Face tools are listed and enabled. 
 
-1. Add the GitHub MCP server:
+   ![Screenshot of HuggingFace MCP server tools in VS Code](screenshot_vscode_hf_tools.png)
 
-   ```bash
-   claude mcp add --transport http github https://api.githubcopilot.com/mcp/
-   ```
-
-2. Authenticate when prompted (run `/mcp` inside Claude Code and follow the browser flow).
-3. Ask a question:
+10. Ask a question that requires context from HuggingFace:
 
    ```text
-   claude "What are the top 5 open issues in PrefectHQ/fastmcp?"
+   What recent research papers are there about MCP?"
+   ```
+
+### Copilot CLI with authenticated server
+
+1. Add the Hugging Face MCP server using the CLI:
+
+   ```bash
+   copilot mcp add --transport http huggingface 'https://huggingface.co/mcp?login'
+   ```
+
+2. Open Copilot CLI with `copilot`. It should immediately pop open the Hugging Face authorization flow in a browser.
+
+3. If you are not yet logged into Hugging Face, login or sign-in on the page that pops up.
+
+   ![Screenshot of Hugging Face login](screenshot_claudecode_hf_login.png)
+
+4. Select **Authorize** on the Hugging Face consent screen.
+
+   ![Screenshot of Copilot CLI consent screen](screenshot_copilotcli_hf_consent_screen.png)
+
+5. Back inside the Copilot CLI, run `/mcp` and you should see that the Hugging Face server is authenticated:
+
+   ![Screenshot of MCP server listing in Copilot CLI](screenshot_copilotcli_hf_mcplist.png)
+
+6. Ask a question that requires context from Hugging Face:
+
+   ```text
+   What recent research papers are there about MCP?"
+   ```
+
+### Claude Code with authenticated server
+
+1. Add the Hugging Face MCP server:
+
+   ```bash
+   claude mcp add --transport http huggingface 'https://huggingface.co/mcp?login'
+   ```
+
+2. Open Claude Code with `claude` and run `/mcp` to list configured MCP servers. Select the "huggingface" server.
+
+   ![Screenshot of manage MCP servers in Claude Code](screenshot_claudecode_managemcpservers.png)
+
+3. In the "Hugging Face MCP server" configuration screen, select "Authenticate":
+
+   ![Screenshot of Hugging Face MCP server config in Claude Code](screenshot_claudecode_hf_mcpconfig.png)
+
+   Claude Code will start off the OAuth flow by redirecting to a browser:
+
+   ![Screenshot of message in Claude Code about redirecting to a browser](screenshot_claudecode_hf_oauth_flow_start.png)
+
+4. If you are not yet logged into Hugging Face, login or sign-in on the page that pops up:
+
+   ![Screenshot of Hugging Face login](screenshot_claudecode_hf_login.png)
+
+5. After login, authorize Claude Code to grant access to Hugging Face:
+
+   ![Screenshot of Hugging Face grant screen](screenshot_claudecode_hf_consent_screen_browser.png)
+
+   You should see that auth was successful in both the browser and terminal:
+
+   ![Screenshot of Claude code success](screenshot_claudecode_hf_successful_terminal.png)
+
+6. Ask a question that requires the server to answer:
+
+   ```text
+   What recent research papers are there about MCP?"
    ```

@@ -137,44 +137,44 @@ Follow the instructions for your agent:
 
 ### Copilot in VS Code — public server
 
-1. Open (or create) the file `.mcp.json` in your workspace and make sure it contains a server configuration pointed at the remote MCP server URL:
+1. Open (or create) the file `.mcp.json` in your workspace and make sure it contains a server configuration pointed at the Microsoft Learn MCP server URL:
 
 
    ```json
    {
    "mcpServers": {
-       "deepwiki": {
+      "mslearn": {
          "type": "http",
-         "url": "https://mcp.deepwiki.com/mcp"
+             "url": "https://learn.microsoft.com/api/mcp"
        }
      }
    }
    ```
 
-2. Select "Start" on the server in the config file. 
+2. Select "Start" on the server in the config file.
+
+   ![Screenshot of Start next to mslearn server in .mcp.json](docs/screenshot_vscode_mslearn_start.png)
 
 3. In the Copilot Chat panel, click the tools icon (🔧) to confirm the server tools are listed.
 
    ![Screenshot of tools listing for remote-mcp-server](docs/screenshot_copilot_tools.png)
 
-4. Ask a question that can be answered by the MCP server:
+4. Ask a question that requires context from Microsoft Learn documentation:
 
-   > Explain how PrefectHQ/fastmcp handles tool registration internally.
-
-5. Approve the MCP tool call and review the grounded answer.
+   > What kind of GPUs are available for Azure Container Apps?
 
 ### Copilot CLI — public server
 
 1. Add the MCP server using the CLI:
 
    ```bash
-   copilot mcp add --transport http deepwiki https://mcp.deepwiki.com/mcp
+   copilot mcp add --transport http mslearn https://learn.microsoft.com/api/mcp
    ```
 
 2. Ask a question that can be answered by the MCP server:
 
    ```bash
-   copilot -i "Explain how PrefectHQ/fastmcp handles tool registration internally."
+   copilot -i "What kind of GPUs are available for Azure Container Apps?"
    ```
 
 ### Claude Code — public server
@@ -182,7 +182,7 @@ Follow the instructions for your agent:
 1. Add the server:
 
    ```bash
-   claude mcp add --transport http deepwiki https://mcp.deepwiki.com/mcp
+   claude mcp add --transport http mslearn https://learn.microsoft.com/api/mcp
    ```
 
 2. Verify it was added:
@@ -194,17 +194,16 @@ Follow the instructions for your agent:
 3. Ask a question that can be answered by the MCP server:
 
    ```bash
-   claude "Use the deepwiki MCP server to explain how PrefectHQ/fastmcp handles tool registration internally."
+   claude "What kind of GPUs are available for Azure Container Apps?"
    ```
-
-   Note that we specifically mentioned the MCP server in this question, as Claude has a built-in web search tool that it tries to use instead.
 
 ---
 
 ## Step 4: Use an authenticated MCP server
 
 The goal of this step is to show you what it's like to use an MCP server that requires authentication via the MCP Auth (OAuth2) flow.
-The recommendation is to use the [Hugging Face MCP server](https://huggingface.co/mcp), as it is easy to create an account there if you don't yet have one, but you can also try other [remote servers that require OAuth](https://mcpservers.org/remote-mcp-servers). Just change the URL as needed.
+
+Our recommendation is to use the [Hugging Face MCP server](https://huggingface.co/mcp), as it is easy to create an account there if you don't yet have one, but you can also try other [remote servers that require OAuth](https://mcpservers.org/remote-mcp-servers). Just change the URL to match your selected server.
 
 ### Copilot in VS Code with authenticated server
 

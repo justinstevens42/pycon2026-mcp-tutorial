@@ -75,9 +75,7 @@ I can come up with fallback strategies for each requirement. The fallback may in
 ## TODOs
 
 - Make slides
-- Test GitHub Copilot with brand new GitHUb account in Codespace
 - Make a devcontainer for Ollama (based off other repos)
-- Figure out how to add GitHub MPC with auth to Claude Code- PAT https://github.com/github/github-mcp-server/blob/main/docs/installation-guides/install-claude.md
 - For exercise1, make auth step a bonus step, and suggest huggingface for Claude https://huggingface.co/mcp
    They can also find more auth servers here: https://mcpservers.org/remote-mcp-servers
 - Set up an Azure OpenAI proxy server so that I can give people keys
@@ -86,10 +84,6 @@ I can come up with fallback strategies for each requirement. The fallback may in
 - Put stuff on USB sticks - ollama model, keycloak
 - Pin FastMCP version that includes built-in KeycloakAuthProvider (merged in [PR #1937](https://github.com/PrefectHQ/fastmcp/pull/1937))
 - Deploy keycloak server to Azure Container Apps, also run it off local network
-- Get Post-its
 - Enable pre-builds
 - Add link to feedback survey
-
-## Open questions
-
-- Should we move Agents+MCP to the end, so we dont have to worry about LLM setup so early, and get to MCP building earlier? That doesn't flow as well though. We could also just have it be a bonus section, if we dont get to it, thats okay?
+- Is GitHub Copilot Chat a separate extension now?

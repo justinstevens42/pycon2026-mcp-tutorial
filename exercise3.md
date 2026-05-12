@@ -100,7 +100,6 @@ async def buy_product(
     # 1. Check if the product exists in INVENTORY
     # 2. Check if there's enough stock
     # 3. Reduce the quantity and return a success message
-    # 4. Return an error message if the product doesn't exist or is out of stock
 ```
 
 For reference, you can see what a tool with typed arguments looks like in FastMCP (from the [expenses demo server](https://github.com/Azure-Samples/python-mcp-demos/blob/main/servers/basic_mcp_http.py)). Each argument uses `Annotated[type, "description"]` so the LLM knows what to pass.
@@ -131,16 +130,16 @@ With the server running, add it to your coding agent from Exercise 1.
 
 ### GitHub Copilot in VS Code
 
-1. Add to `.mcp.json`:
+1. Add to `.vscode/mcp.json`:
 
     ```json
     {
-    "mcpServers": {
+      "servers": {
         "product-store": {
-        "type": "http",
-        "url": "http://localhost:8420/mcp"
+          "type": "http",
+          "url": "http://localhost:8420/mcp"
         }
-    }
+      }
     }
     ```
 

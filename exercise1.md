@@ -17,9 +17,13 @@ Pick **one** of the options below to get the tutorial repository open and ready.
 
 Everything is pre-configured — no local installs needed. You just need a [GitHub account](https://github.com/).
 
-1. Go to [github.com/pamelafox/pycon2026-mcp-tutorial](https://github.com/pamelafox/pycon2026-mcp-tutorial).
-2. Click **Code → Codespaces → Create codespace on main**.
-3. Wait for the Codespace to build. Once the editor loads, you're ready to move on to [Step 2](#step-2-set-up-a-coding-agent).
+1. Login to your GitHub account.
+2. Go to [github.com/pamelafox/pycon2026-mcp-tutorial](https://github.com/pamelafox/pycon2026-mcp-tutorial).
+3. Click **Code → Codespaces → Create codespace on main**.
+
+   ![Screenshot of Create codespace button](docs/screenshot_codespaces_open.png)
+
+4. Wait for the Codespace to build. Once the editor loads, you're ready to move on to [Step 2](#step-2-set-up-a-coding-agent).
 
 ### Option B: VS Code + Dev Containers
 
@@ -54,12 +58,11 @@ If you prefer to work without Docker or Codespaces, you can set up a local Pytho
 
 **Prerequisites:**
 
-- [Python 3.12+](https://www.python.org/downloads/) installed
-- [uv](https://docs.astral.sh/uv/getting-started/installation/) installed (Python package manager)
+- [uv](https://docs.astral.sh/uv/getting-started/installation/): Python package manager that can also download Python if you don't yet have it instaalled.
 
 **Steps:**
 
-1. Clone the repository:
+1. Clone (or download) the repository:
 
    ```bash
    git clone https://github.com/pamelafox/pycon2026-mcp-tutorial.git
@@ -88,7 +91,7 @@ Set up **one** of the coding agents from instructions below, either [GitHub Copi
 
    > 🪧 **Note:** If this is your first time using GitHub Copilot, you will need to accept the usage terms to continue.
 
-3. Make sure the chat is in **Agent** mode.
+3. Make sure the chat is in **Agent** mode. (You may not see "Agent", but you should see a loop icon which says "Agent" upon clicking.)
 
    ![Screenshot of chat box with "Agent" mode selected](docs/screenshot_copilot_agent.png)
 
@@ -137,15 +140,15 @@ Follow the instructions for your agent:
 
 ### Copilot in VS Code — public server
 
-1. Open (or create) the file `.mcp.json` in your workspace and make sure it contains a server configuration pointed at the Microsoft Learn MCP server URL:
+1. Open (or create) the file `.vscode/mcp.json` in your workspace and make sure it contains a server configuration pointed at the Microsoft Learn MCP server URL:
 
 
    ```json
    {
-   "mcpServers": {
-      "mslearn": {
+     "servers": {
+       "mslearn": {
          "type": "http",
-             "url": "https://learn.microsoft.com/api/mcp"
+         "url": "https://learn.microsoft.com/api/mcp"
        }
      }
    }
@@ -153,11 +156,13 @@ Follow the instructions for your agent:
 
 2. Select "Start" on the server in the config file.
 
-   ![Screenshot of Start next to mslearn server in .mcp.json](docs/screenshot_vscode_mslearn_start.png)
+   ![Screenshot of Start next to mslearn server in mcp.json](docs/screenshot_vscode_mcpjson_mslearn.png)
 
-3. In the Copilot Chat panel, click the tools icon (🔧) to confirm the server tools are listed.
+3. In the Copilot Chat panel, click the tools icon to confirm the server tools are listed.
 
-   ![Screenshot of tools listing for remote-mcp-server](docs/screenshot_copilot_tools.png)
+   ![Screenshot of tools icon in chat window](docs/screenshot_vscode_configuretools.png)
+
+   ![Screenshot of tools listing for remote-mcp-server](docs/screenshot_vscode_tools_mslearn.png)
 
 4. Ask a question that requires context from Microsoft Learn documentation:
 
@@ -207,11 +212,11 @@ Our recommendation is to use the [Hugging Face MCP server](https://huggingface.c
 
 ### Copilot in VS Code with authenticated server
 
-1. Make sure that `.mcp.json` contains a server configuration pointed at the Hugging Face MCP server URL:
+1. Make sure that `.vscode/mcp.json` contains a server configuration pointed at the Hugging Face MCP server URL:
 
     ```json
     {
-       "mcpServers": {
+       "servers": {
           "huggingface": {
              "type": "http",
              "url": "https://huggingface.co/mcp?login"

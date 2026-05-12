@@ -89,7 +89,6 @@ I can come up with fallback strategies for each requirement. The fallback may in
 - Get Post-its
 - Enable pre-builds
 - Add link to feedback survey
-- Change to .mcp.json and test in Codespaces
 
 ## Open questions
 

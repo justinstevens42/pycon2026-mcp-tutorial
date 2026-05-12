@@ -43,7 +43,7 @@ async def add_expense(
     category: Annotated[Category, "Category label"],
     description: Annotated[str, "Human-readable description of the expense"],
     payment_method: Annotated[PaymentMethod, "Payment method used"],
-):
+) -> str:
     """Add a new expense to the expenses.csv file."""
     if amount <= 0:
         return "Error: Amount must be positive"

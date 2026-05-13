@@ -259,9 +259,8 @@ Our recommendation is to use the [Hugging Face MCP server](https://huggingface.c
 
 10. Ask a question that requires context from HuggingFace:
 
-   ```text
-   What recent research papers are there about MCP?"
-   ```
+   > What recent research papers are there about MCP?"
+
 
 ### GitHub Copilot CLI with authenticated server
 

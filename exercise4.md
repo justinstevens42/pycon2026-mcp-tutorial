@@ -44,15 +44,15 @@ def show_inventory_chart() -> PrefabApp:
 
 Restart the server:
 
-    ```bash
-    uv run servers/store_server.py
-    ```
+```bash
+uv run servers/store_server.py
+```
 
 Ask your coding agent:
 
-    ```text
-    Show me the inventory chart
-    ```
+```text
+Show me the inventory chart
+```
 
 You should see an interactive bar chart rendered inline in the conversation:
 

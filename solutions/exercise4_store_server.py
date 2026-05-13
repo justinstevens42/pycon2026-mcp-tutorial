@@ -3,7 +3,7 @@ from typing import Annotated
 
 from fastmcp import Context, FastMCP
 from prefab_ui.app import PrefabApp
-from prefab_ui.components import Badge, Card, CardContent, Column, Grid, Heading, Separator, Text
+from prefab_ui.components import Column, Heading
 from prefab_ui.components.charts import BarChart, ChartSeries
 from pydantic import BaseModel, Field
 
@@ -78,26 +78,6 @@ def show_inventory_chart() -> PrefabApp:
             series=[ChartSeries(data_key="quantity", label="In Stock")],
             x_axis="product",
         )
-
-    return PrefabApp(view=view)
-
-
-@mcp.tool(app=True)
-def show_product_catalog() -> PrefabApp:
-    """Show the product catalog as a visual card layout."""
-    with Column(gap=4, css_class="p-6") as view:
-        Heading("Product Catalog")
-        Separator()
-        with Grid(columns=2, gap=4):
-            for name, info in INVENTORY.items():
-                with Card():
-                    with CardContent():
-                        Text(name, css_class="font-medium")
-                        Text(f"${info['price']:.2f}")
-                        if info["quantity"] > 0:
-                            Badge(f"{info['quantity']} in stock", variant="success")
-                        else:
-                            Badge("Out of Stock", variant="destructive")
 
     return PrefabApp(view=view)
 

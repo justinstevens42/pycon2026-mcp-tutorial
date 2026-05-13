@@ -3,8 +3,8 @@
 In this exercise, you'll add a visual UI to your store server from Exercise 3 using [Prefab UI](https://gofastmcp.com/apps/prefab) — an interactive component library for FastMCP apps. Instead of returning plain text, your tools will render charts, tables, and cards directly in the host's conversation.
 
 - [Step 1: Add an inventory dashboard tool](#step-1-add-an-inventory-dashboard-tool)
-- [Step 2: Product catalog with cards](#step-2-product-catalog-with-cards)
-- [Step 3: Purchase confirmation with elicitation](#step-3-purchase-confirmation-with-elicitation)
+- [Step 2: Purchase confirmation with elicitation](#step-2-purchase-confirmation-with-elicitation)
+- [Take it further](#take-it-further)
 - [Further reading](#further-reading)
 
 ---
@@ -58,52 +58,11 @@ You should see an interactive bar chart rendered inline in the conversation:
 
 ![Inventory chart showing bar chart of product stock levels](docs/screenshot_inventorychart.png)
 
-Try buying a product first, then viewing the chart again to see the updated quantities.
+Try buying an available product, then viewing the chart again to see the updated quantities.
 
 ---
 
-## Step 2: Product catalog with cards
-
-Add a tool that displays your products as styled cards with prices and stock badges. Add these extra imports:
-
-```python
-from prefab_ui.components import Row, Grid, Card, CardContent, Text, Badge, Separator
-```
-
-Then add the tool:
-
-```python
-@mcp.tool(app=True)
-def show_product_catalog() -> PrefabApp:
-    """Show the product catalog as a visual card layout."""
-
-    with Column(gap=4, css_class="p-6") as view:
-        Heading("Product Catalog")
-        Separator()
-        with Grid(columns=2, gap=4):
-            for name, info in INVENTORY.items():
-                with Card():
-                    with CardContent():
-                        Text(name, css_class="font-medium")
-                        # TODO: Add a Text component showing the price
-                        # TODO: Add a Badge showing stock status
-                        #   e.g. "In Stock" (variant="success") or
-                        #        "Out of Stock" (variant="destructive")
-
-    return PrefabApp(view=view)
-```
-
-Restart your server and ask your coding agent:
-
-> "Show me the product catalog"
-
-You should see a card grid with your products, prices, and stock badges:
-
-![Product catalog showing cards with prices and stock badges](docs/screenshot_productcatalog.png)
-
----
-
-## Step 3: Purchase confirmation with elicitation
+## Step 2: Purchase confirmation with elicitation
 
 Instead of buying immediately, have the server ask the user to confirm the purchase. This uses [elicitation](https://gofastmcp.com/clients/elicitation) — a way for the server to request structured input from the user mid-operation.
 
@@ -153,7 +112,27 @@ When this tool runs, the host will display a confirmation dialog. The user can a
 
 ---
 
-## Further reading
+## Take it further
+
+If you finish early, try one of these ideas. 
+
+**Apps:**
+
+- **Product catalog with cards**: Display products as styled cards with prices and stock badges. Useful components: `Grid`, `Card`, `CardContent`, `Text`, `Badge`, `Separator`.
+- **Sales dashboard**: Track purchases in a list and render them as a `Table` or a `LineChart` of revenue over time.
+- **Filterable inventory**: Add a search `Input` and a `Select` for category, with reactive state to filter the displayed products.
+- **Restock form**: Use `Form`, `Input`, and `Button` components to let the user add stock to a product directly from the UI.
+
+**Elicitations:**
+
+- **Quantity adjustment**: If the requested quantity exceeds stock, elicit the user to pick a smaller quantity instead of failing.
+- **Shipping address**: Before completing a purchase, elicit a structured address (multiple fields in one Pydantic model).
+- **Multi-step checkout**: Chain elicitations: confirm items → ask for gift wrap → ask for delivery date.
+- **Discount code**: Optionally elicit a promo code with a free-text response, then apply a discount if it matches.
+
+---
+
+## Related reading
 
 - [MCP Apps overview](https://gofastmcp.com/apps/overview) — Three other ways to build apps (FastMCPApp, Generative UI, custom HTML)
 - [Prefab UI docs](https://gofastmcp.com/apps/prefab) — Full component reference (charts, tables, forms, state, reactivity)

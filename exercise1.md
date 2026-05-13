@@ -166,7 +166,9 @@ Follow the instructions for your agent, either [GitHub Copilot in VS Code](#gith
 
 4. Ask a question that requires context from Microsoft Learn documentation:
 
-   > What kind of GPUs are available for Azure Container Apps?
+   ```text
+   What kind of GPUs are available for Azure Container Apps?
+   ```
 
 ### GitHub Copilot CLI — public server
 
@@ -259,8 +261,9 @@ Our recommendation is to use the [Hugging Face MCP server](https://huggingface.c
 
 10. Ask a question that requires context from HuggingFace:
 
-   > What recent research papers are there about MCP?"
-
+   ```text
+   What recent research papers are there about MCP?"
+   ```
 
 ### GitHub Copilot CLI with authenticated server
 

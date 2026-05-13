@@ -51,26 +51,27 @@ Now connect from your coding agent. In VS Code, your `.vscode/mcp.json` stays th
 
 ```json
 {
-    "servers": {
+  "servers": {
     "product-store": {
-    "type": "http",
-    "url": "http://localhost:8420/mcp"
+      "type": "http",
+      "url": "http://localhost:8420/mcp"
     }
-}
+  }
 }
 ```
 
 When you ask Copilot to use the server:
 
-1. VS Code detects the server requires authentication (it gets a 401 response).
-2. A browser window opens to the Keycloak login page.
-3. Log in with the credentials for the test user: `testuser`, `testpass`.
+1. VS Code detects the server requires authentication (since it receives a 401 response).
+2. A browser window opens to the Keycloak login page. Log in with the credentials for the test user: `testuser`, `testpass`.
 4. Keycloak shows a consent page — click **Allow**.
 5. The browser redirects back to VS Code, and the tool call succeeds.
 
 Try asking:
 
-> "Buy a product from the store"
+```text
+Buy a product from the store
+```
 
 You should see the normal response, but now it went through the full OAuth flow first. Check your server's terminal output — you'll see the 401, the token exchange, and then the authenticated 200.
 

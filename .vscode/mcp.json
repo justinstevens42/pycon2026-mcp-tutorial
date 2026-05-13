@@ -1,8 +1,9 @@
 {
-    "servers": {
-      "mslearn": {
-        "type": "http",
-        "url": "https://learn.microsoft.com/api/mcp"
-      }
-  }
+	"servers": {
+		"github": {
+			"type": "http",
+			"url": "https://api.githubcopilot.com/mcp/"
+		}
+	},
+	"inputs": []
 }

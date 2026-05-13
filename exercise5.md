@@ -47,25 +47,14 @@ Restart your server:
 uv run servers/store_server.py
 ```
 
-Now connect from your coding agent. In VS Code, your `.vscode/mcp.json` stays the same — the URL doesn't change, but the server will now require authentication.
+Now connect your coding agent to the MCP server. The configuration should point at the same URL, but you may need to restart the server in your coding agent so that it realizes that it now requires authentication.
 
-```json
-{
-  "servers": {
-    "product-store": {
-      "type": "http",
-      "url": "http://localhost:8420/mcp"
-    }
-  }
-}
-```
+When you ask the coding agent to use the server:
 
-When you ask Copilot to use the server:
-
-1. VS Code detects the server requires authentication (since it receives a 401 response).
+1. The MCP client detects the server requires authentication (since it receives a 401 response).
 2. A browser window opens to the Keycloak login page. Log in with the credentials for the test user: `testuser`, `testpass`.
 4. Keycloak shows a consent page — click **Allow**.
-5. The browser redirects back to VS Code, and the tool call succeeds.
+5. The browser redirects back, and the tool call succeeds.
 
 Try asking:
 

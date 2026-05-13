@@ -1,11 +1,11 @@
-# Exercise 5: Add Keycloak Authentication to Your MCP Server
+# Exercise 5: Add Keycloak authentication to your MCP server
 
 In this exercise, you'll add OAuth 2.1 authentication to your store server using [Keycloak](https://www.keycloak.org/), an open-source identity server. After this, only authenticated users can access your server's tools — and the server can identify who is making each request.
 
 - [Step 1: Add Keycloak auth to your server](#step-1-add-keycloak-auth-to-your-server)
 - [Step 2: Test the OAuth flow](#step-2-test-the-oauth-flow)
-- [Bonus: Make tools user-aware](#bonus-make-tools-user-aware)
-- [Further reading](#further-reading)
+- [Step 3: Make tools user-aware](#step-3-make-tools-user-aware)
+- [Recommended reading](#recommended-reading)
 
 ---
 
@@ -76,7 +76,7 @@ You should see the normal response, but now it went through the full OAuth flow 
 
 ---
 
-## Bonus: Make tools user-aware
+## Step 3: Make tools user-aware
 
 Now that users are authenticated, you can identify who is making each request. This requires adding middleware that extracts the user ID from the OAuth token and makes it available to your tools.
 
@@ -134,7 +134,7 @@ Restart the server and buy a product — you should see your Keycloak user ID in
 
 ---
 
-## Further reading
+## Recommended reading
 
 - [MCP Auth specification](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization) — The full OAuth 2.1 protocol for MCP
 - [FastMCP auth providers](https://gofastmcp.com/servers/auth) — Built-in providers for Keycloak, Entra, Auth0, ScaleKit, and more

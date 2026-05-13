@@ -1,4 +1,4 @@
-# Exercise 2: Code a Python Agent with MCP Tools
+# Exercise 2: Code a Python agent with MCP tools
 
 In this exercise, you'll write a Python script that creates an AI agent and connects it to an MCP server. The agent will use the MCP server's tools to answer questions - just like the coding agents from Exercise 1, but now you're building the agent yourself.
 

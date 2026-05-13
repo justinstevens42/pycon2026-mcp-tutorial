@@ -1,4 +1,4 @@
-# Exercise 4: Add Advanced Features to Your MCP Server
+# Exercise 4: Add advanced features to your MCP server
 
 In this exercise, you'll add a visual UI to your store server from Exercise 3 using [Prefab UI](https://gofastmcp.com/apps/prefab) — an interactive component library for FastMCP apps. Instead of returning plain text, your tools will render charts, tables, and cards directly in the host's conversation.
 

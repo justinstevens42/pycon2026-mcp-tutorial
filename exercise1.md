@@ -1,4 +1,4 @@
-# Exercise 1: MCP Servers and Coding Agents
+# Exercise 1: MCP servers and coding agents
 
 In this exercise, you'll set up a development environment, connect a coding agent to public MCP servers, and then try an authenticated MCP server.
 

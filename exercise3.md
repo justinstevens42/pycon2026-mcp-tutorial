@@ -1,4 +1,4 @@
-# Exercise 3: Build Your Own MCP Server
+# Exercise 3: Build your own MCP server
 
 In this exercise, you'll build an MCP server from scratch using [FastMCP](https://gofastmcp.com/). You'll create your own **store** server — selling whatever products you want — with tools for browsing and buying, then test it with your coding agent and the MCP Inspector.
 
@@ -10,7 +10,7 @@ In this exercise, you'll build an MCP server from scratch using [FastMCP](https:
 - [Step 6: Test with your coding agent](#step-6-test-with-your-coding-agent)
 - [Step 7: Test with MCP Inspector](#step-7-test-with-mcp-inspector)
 - [Step 8: Test with MCPJam](#step-8-test-with-mcpjam)
-- [Bonus: Add more features](#bonus-add-more-features)
+- [Take it further](#take-it-further)
 
 ---
 

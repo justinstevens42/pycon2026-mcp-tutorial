@@ -2,6 +2,10 @@
 
 A hands-on tutorial for [PyCon 2026](https://us.pycon.org/2026/schedule/presentation/2/) on building MCP servers with Python and FastMCP.
 
+## Slides
+
+https://pamelafox.github.io/pycon2026-mcp-tutorial/
+
 ## Exercises
 
 | Exercise | Description |

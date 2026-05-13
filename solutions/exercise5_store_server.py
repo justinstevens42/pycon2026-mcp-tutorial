@@ -15,10 +15,10 @@ logger.setLevel(logging.INFO)
 
 # Configure Keycloak authentication
 auth = KeycloakAuthProvider(
-    realm_url="REPLACE_WITH_INSTRUCTOR_REALM_URL",
+    realm_url="https://pf-keycloakmcp-jscl-kc.nicesand-8c230ae8.westus.azurecontainerapps.io/auth/realms/mcp",
     base_url="http://localhost:8420",
     required_scopes=["openid", "mcp:access"],
-    audience="REPLACE_WITH_INSTRUCTOR_AUDIENCE",
+    audience="mcp-server",
 )
 
 

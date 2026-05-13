@@ -12,42 +12,30 @@ In this exercise, you'll add OAuth 2.1 authentication to your store server using
 ## Step 1: Add Keycloak auth to your server
 
 Your instructor has a Keycloak instance running with a pre-configured realm and test user accounts. You'll connect your store server to it.
-
-**Instructor-provided values:**
-
-| Setting | Value |
-| --- | --- |
-| Keycloak Realm URL | `________` |
-| Audience | `________` |
-| Test username | `________` |
-| Test password | `________` |
-
 Open your `servers/store_server.py` and make the following changes:
 
-**1. Add the import** at the top of the file:
+1. **Add the import** at the top of the file:
 
-```python
-from fastmcp.server.auth.providers.keycloak import KeycloakAuthProvider
-```
+    ```python
+    from fastmcp.server.auth.providers.keycloak import KeycloakAuthProvider
+    ```
 
-**2. Configure the auth provider** (before your tool definitions):
+2. **Configure the auth provider** (before your tool definitions):
 
-```python
-auth = KeycloakAuthProvider(
-    realm_url="________",  # TODO: Paste the Keycloak Realm URL from the table above
-    base_url="http://localhost:8420",
-    required_scopes=["openid", "mcp:access"],
-    audience="________",  # TODO: Paste the audience from the table above
-)
-```
+    ```python
+    auth = KeycloakAuthProvider(
+        realm_url="https://pf-keycloakmcp-jscl-kc.nicesand-8c230ae8.westus.azurecontainerapps.io/auth/realms/mcp",
+        base_url="http://localhost:8420",
+        required_scopes=["openid", "mcp:access"],
+        audience="mcp-server",
+    )
+    ```
 
-**3. Pass `auth` to your FastMCP constructor:**
+3. **Pass `auth` to your FastMCP constructor:**
 
-```python
-mcp = FastMCP("Your Store Name", auth=auth)
-```
-
-That's it — three changes. FastMCP handles everything else: the PRM endpoint, the `WWW-Authenticate` header, and the full OAuth 2.1 flow with Keycloak.
+    ```python
+    mcp = FastMCP("Your Store Name", auth=auth)
+    ```
 
 ---
 
@@ -55,28 +43,28 @@ That's it — three changes. FastMCP handles everything else: the PRM endpoint, 
 
 Restart your server:
 
-```bash
-uv run servers/store_server.py
-```
+    ```bash
+    uv run servers/store_server.py
+    ```
 
 Now connect from your coding agent. In VS Code, your `.vscode/mcp.json` stays the same — the URL doesn't change, but the server will now require authentication.
 
-```json
-{
-    "servers": {
-    "product-store": {
-      "type": "http",
-      "url": "http://localhost:8420/mcp"
+    ```json
+    {
+        "servers": {
+        "product-store": {
+        "type": "http",
+        "url": "http://localhost:8420/mcp"
+        }
     }
-  }
-}
-```
+    }
+    ```
 
-When you ask Copilot to use a tool on this server:
+When you ask Copilot to use the server:
 
 1. VS Code detects the server requires authentication (it gets a 401 response).
 2. A browser window opens to the Keycloak login page.
-3. Log in with the test credentials from the table above.
+3. Log in with the credentials for the test user: `testuser`, `testpass`.
 4. Keycloak shows a consent page — click **Allow**.
 5. The browser redirects back to VS Code, and the tool call succeeds.
 

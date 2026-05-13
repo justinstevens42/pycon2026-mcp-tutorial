@@ -53,7 +53,7 @@ When you ask the coding agent to use the server:
 
 1. The MCP client detects the server requires authentication (since it receives a 401 response).
 2. A browser window opens to the Keycloak login page. Log in with the credentials for the test user: `testuser`, `testpass`.
-4. Keycloak shows a consent page — click **Allow**.
+4. Keycloak shows a consent page. Click **Allow**.
 5. The browser redirects back, and the tool call succeeds.
 
 Try asking:
@@ -78,7 +78,7 @@ from fastmcp.server.dependencies import get_access_token
 from fastmcp.server.middleware import Middleware, MiddlewareContext
 ```
 
-**2. Add the middleware class** (before your tool definitions):
+**2. Add the middleware class** (before you construct the app):
 
 ```python
 class UserAuthMiddleware(Middleware):

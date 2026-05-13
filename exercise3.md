@@ -62,12 +62,13 @@ Each product needs a `price` and `quantity`. For example:
 ```python
 INVENTORY = {
     "Croissant": {"price": 3.50, "quantity": 40},
-    "Sourdough Loaf": {"price": 7.00, "quantity": 20},
-    "Cinnamon Roll": {"price": 4.25, "quantity": 30},
+    # ...
 }
 ```
 
-Add at least 3–5 products. Give your store a name too — update the `FastMCP("________")` line to match your theme (e.g. `FastMCP("Pamela's Bakery")`).
+Add at least 3–5 products.
+
+Give your store a name too, by updating the `FastMCP("________")` line to match your theme (e.g. `FastMCP("Bake & Shake")`).
 
 ---
 
@@ -102,7 +103,7 @@ async def buy_product(
     # 3. Reduce the quantity and return a success message
 ```
 
-For reference, you can see what a tool with typed arguments looks like in FastMCP (from the [expenses demo server](https://github.com/Azure-Samples/python-mcp-demos/blob/main/servers/basic_mcp_http.py)). Each argument uses `Annotated[type, "description"]` so the LLM knows what to pass.
+For reference, you can see what a tool with typed arguments looks like in FastMCP (from the [expenses demo server](servers/expenses_tracker.py)). Each argument uses `Annotated[type, "description"]` so the LLM knows what to pass.
 
 ---
 
@@ -147,7 +148,21 @@ With the server running, add it to your coding agent from Exercise 1.
 
 3. Open the "Configure tools" button from the Copilot chat, and ensure that "product-store" mcp server is enabled, with the expected tools listed.
 
-4. Try a prompt like "What products are available in the store?"
+4. Try a prompt like "What products are available in the store?" Make sure that Copilot uses the MCP server to answer the question, **not** the local file. If you don't see an MCP tool call, you may need to close the file and start a new chat so that Copilot doesn't base its answer off of the file itself.
+
+### GitHub Copilot CLI
+
+1. Add the MCP server using the CLI:
+
+   ```bash
+   copilot mcp add --transport http product-store http://localhost:8420/mcp
+   ```
+
+2. Try a prompt like:
+
+   ```bash
+   copilot -i "What products are available in the store?"
+   ```
 
 ### Claude Code
 
@@ -195,7 +210,7 @@ With the server running, add it to your coding agent from Exercise 1.
 
 ---
 
-## Bonus: Add more features
+## Take it further
 
 If you finish early, try adding:
 

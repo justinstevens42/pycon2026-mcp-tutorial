@@ -184,6 +184,8 @@ With the server running, add it to your coding agent from Exercise 1.
 
 [MCP Inspector](https://github.com/modelcontextprotocol/inspector) lets you test your server directly without going through an LLM.
 
+> 🪧 **Note:** MCP Inspector does not work if you're developing in GitHub Codespaces, due to cross-domain issues between the forwarded Inspector UI and the forwarded MCP server port.
+
 1. In a new terminal (keep the server running), launch the inspector:
 
    ```bash
@@ -201,6 +203,8 @@ With the server running, add it to your coding agent from Exercise 1.
 ## Step 8: Test with MCPJam
 
 [MCPJam](https://www.mcpjam.com/) is a web-based MCP playground that lets you interact with your server through a chat-like UI. It's a nice middle ground between the raw Inspector and a full coding agent.
+
+> 🪧 **Note:** MCPJam does not work if you're developing in GitHub Codespaces, due to cross-domain issues between the forwarded Inspector UI and the forwarded MCP server port.
 
 1. Launch MCPJam locally (needed to access localhost servers):
 

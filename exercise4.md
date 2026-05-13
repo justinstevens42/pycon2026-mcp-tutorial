@@ -19,7 +19,7 @@ from prefab_ui.components import Column, Heading
 from prefab_ui.components.charts import BarChart, ChartSeries
 ```
 
-Then add this tool — fill in the TODO to build the chart data from your `INVENTORY`:
+Then add this tool that has `app=True` and fill in the TODO to build the chart data from your `INVENTORY`:
 
 ```python
 @mcp.tool(app=True)
@@ -42,15 +42,21 @@ def show_inventory_chart() -> PrefabApp:
     return PrefabApp(view=view)
 ```
 
-The key change: `@mcp.tool(app=True)` tells FastMCP this tool returns a UI. The host renders an interactive chart instead of a text blob.
+Restart the server:
 
-Restart your server and ask your coding agent:
+    ```bash
+    uv run servers/store_server.py
+    ```
 
-> "Show me the inventory chart"
+Ask your coding agent:
+
+    ```text
+    Show me the inventory chart
+    ```
 
 You should see an interactive bar chart rendered inline in the conversation:
 
-![Inventory chart showing bar chart of product stock levels](docs/screenshot_inventorychart.png)
+    ![Inventory chart showing bar chart of product stock levels](docs/screenshot_inventorychart.png)
 
 Try buying a product first, then viewing the chart again to see the updated quantities.
 

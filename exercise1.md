@@ -81,22 +81,22 @@ If you prefer to work without Docker or Codespaces, you can set up a local Pytho
 
 ## Step 2: Set up a coding agent
 
-Set up **one** of the coding agents from instructions below, either [GitHub Copilot in VS Code](#option-a-github-copilot-in-vs-code), [GitHub Copilot CLI](#option-b-github-copilot-cli), or [Claude Code](#option-c-claude-code). You are welcome to use another MCP-compatible coding agent if you have one installed, but agents vary in how fully they support MCP features, so you may encounter issues.
+Set up **one** of the coding agents from instructions below, either [GitHub Copilot in VS Code / Codespaces](#option-a-github-copilot-in-vs-code--codespaces), [GitHub Copilot CLI](#option-b-github-copilot-cli), or [Claude Code](#option-c-claude-code). You are welcome to use another MCP-compatible coding agent if you have one installed, but agents vary in how fully they support MCP features, so you may encounter issues.
 
-### Option A: GitHub Copilot in VS Code
+### Option A: GitHub Copilot in VS Code / Codespaces
 
-1. Make sure the [GitHub Copilot extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) is installed. If you opened this project in Codespaces, the extension is pre-installed.
-2. At the top of VS Code, locate and click the Toggle Chat icon to open a Copilot Chat side panel.
+1. Check the right side of VS Code to see if the Copilot Chat side panel is already open. If it's not open, find the "Toggle Chat" icon at the top of VS Code, locate and click it to open the side panel.
+
    ![Screenshot of "Toggle chat" icon in top right](docs/screenshot_copilot_togglechat.png)
 
    > 🪧 **Note:** If this is your first time using GitHub Copilot, you will need to accept the usage terms to continue.
 
-3. Make sure the chat is in **Agent** mode. (You may not see "Agent", but you should see a loop icon which says "Agent" upon clicking.)
+2. Make sure the chat is in **Agent** mode. (You may not see "Agent", but you should see a loop icon which says "Agent" upon clicking.)
 
    ![Screenshot of chat box with "Agent" mode selected](docs/screenshot_copilot_agent.png)
 
-4. Send a test message "Hello" to confirm the agent is working.
-5. Move on to [Step 3](#step-3-use-a-public-mcp-server-no-auth)
+3. Send a test message "Hello" to confirm the agent is working.
+4. Move on to [Step 3](#step-3-use-a-public-mcp-server-no-auth)
 
 ### Option B: GitHub Copilot CLI
 
@@ -128,17 +128,17 @@ Set up **one** of the coding agents from instructions below, either [GitHub Copi
 
 ## Step 3: Use a public MCP server (no auth)
 
-Now connect your coding agent to a **public MCP server** that requires no authentication. Pick one (or both!) of the servers below:
+Now connect your coding agent to a **public MCP server** that requires no authentication. The examples below use the MS Learn documentation MCP server, but you can also try other options:
 
 | Server | MCP Server URL | Description |
 | --- | --- | --- |
-| [DeepWiki](https://docs.devin.ai/work-with-devin/deepwiki-mcp) | `https://mcp.deepwiki.com/mcp` | GitHub repository documentation |
 | [Microsoft Learn](https://learn.microsoft.com/training/support/mcp) | `https://learn.microsoft.com/api/mcp` | MS Learn documentation |
+| [DeepWiki](https://docs.devin.ai/work-with-devin/deepwiki-mcp) | `https://mcp.deepwiki.com/mcp` | GitHub repository documentation |
 | [French government](https://github.com/datagouv/datagouv-mcp) | `https://mcp.data.gouv.fr/mcp` | French government data |
 
-Follow the instructions for your agent:
+Follow the instructions for your agent, either [GitHub Copilot in VS Code](#github-copilot-in-vs-code--public-server), [GitHub Copilot CLI](#github-copilot-cli--public-server), or [Claude Code](#claude-code--public-server).
 
-### Copilot in VS Code — public server
+### GitHub Copilot in VS Code — public server
 
 1. Open (or create) the file `.vscode/mcp.json` in your workspace and make sure it contains a server configuration pointed at the Microsoft Learn MCP server URL:
 
@@ -168,7 +168,7 @@ Follow the instructions for your agent:
 
    > What kind of GPUs are available for Azure Container Apps?
 
-### Copilot CLI — public server
+### GitHub Copilot CLI — public server
 
 1. Add the MCP server using the CLI:
 
@@ -210,7 +210,7 @@ The goal of this step is to show you what it's like to use an MCP server that re
 
 Our recommendation is to use the [Hugging Face MCP server](https://huggingface.co/mcp), as it is easy to create an account there if you don't yet have one, but you can also try other [remote servers that require OAuth](https://mcpservers.org/remote-mcp-servers). Just change the URL to match your selected server.
 
-### Copilot in VS Code with authenticated server
+### GitHub Copilot in VS Code with authenticated server
 
 1. Make sure that `.vscode/mcp.json` contains a server configuration pointed at the Hugging Face MCP server URL:
 
@@ -263,7 +263,7 @@ Our recommendation is to use the [Hugging Face MCP server](https://huggingface.c
    What recent research papers are there about MCP?"
    ```
 
-### Copilot CLI with authenticated server
+### GitHub Copilot CLI with authenticated server
 
 1. Add the Hugging Face MCP server using the CLI:
 

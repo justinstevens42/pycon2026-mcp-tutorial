@@ -152,7 +152,7 @@ With the server running, add it to your coding agent from Exercise 1.
 
 ### GitHub Copilot CLI
 
-1. Add the MCP server using the CLI:
+1. Add the MCP server using this command:
 
    ```bash
    copilot mcp add --transport http product-store http://localhost:8420/mcp
@@ -166,13 +166,17 @@ With the server running, add it to your coding agent from Exercise 1.
 
 ### Claude Code
 
-1. Run this command to add the server:
+1. Add the MCP server using this command:
 
     ```bash
     claude mcp add --transport http product-store http://localhost:8420/mcp
     ```
 
-2. Try a prompt like "What products are available in the store?"
+2. Try a prompt like:
+
+   ```bash
+   claude "What products are available in the store?"
+   ```
 
 ---
 

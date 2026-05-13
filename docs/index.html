@@ -53,7 +53,6 @@
 		}
 
 		.reveal .slides {
-			position: relative;
 			z-index: 1;
 		}
 
@@ -310,6 +309,25 @@
 		.reveal section.title-slide p {
 			color: #fff;
 			text-shadow: 0 0 18px rgba(255, 50, 200, 0.62), 0 4px 0 rgba(0, 0, 0, 0.38);
+		}
+
+		.reveal section.heading-only h1,
+		.reveal section.heading-only h2,
+		.reveal section.heading-only h3,
+		.reveal section.heading-only p {
+			width: 100%;
+			max-width: 100%;
+			align-self: stretch;
+			overflow-wrap: break-word;
+			text-wrap: balance;
+		}
+
+		.reveal section.title-slide h1 {
+			width: 100%;
+			max-width: 100%;
+			align-self: stretch;
+			overflow-wrap: break-word;
+			text-wrap: balance;
 		}
 
 		.reveal .client-panel {
@@ -1460,7 +1478,7 @@ async def remove_expenses_for_date(
 
 				<section class="no-code-badge">
 					<h3>Prefab app with FastMCP</h3>
-					<pre style="margin-top: 18px; max-height: none; overflow: hidden;"><code class="language-python" style="font-size: 0.9em; line-height: 1.16; max-height: none; overflow: hidden;" data-trim data-noescape>
+					<pre style="margin-top: 18px; max-height: none; overflow: hidden;"><code class="language-python" style="font-size: 0.75em; line-height: 1.16; max-height: none; overflow: hidden;" data-trim data-noescape>
 from prefab_ui.app import PrefabApp
 from prefab_ui.components import Column, Heading
 from prefab_ui.components.table import Table, TableBody, TableCell, TableHead, TableHeader, TableRow
@@ -1600,9 +1618,9 @@ def render_expenses() -> PrefabApp:
 							</marker>
 						</defs>
 
-						<rect x="46" y="92" width="246" height="438" rx="26" fill="rgba(63, 127, 181, 0.12)" stroke="#3f7fb5" stroke-width="2.5"/>
+						<rect x="46" y="92" width="246" height="438" rx="26" fill="#3f7fb5"/>
 						<image href="Model_Context_Protocol_logo.svg" x="139" y="202" width="58" height="58" opacity="0.92"/>
-						<text x="169" y="322" text-anchor="middle" font-family="Outfit, sans-serif" font-size="34" font-weight="700" fill="#3f7fb5">MCP Client</text>
+						<text x="169" y="322" text-anchor="middle" font-family="Outfit, sans-serif" font-size="34" font-weight="700" fill="#ffffff">MCP Client</text>
 
 						<rect x="788" y="92" width="278" height="438" rx="26" fill="url(#oauthFlowServerCard)" stroke="#e1952a" stroke-width="2.5"/>
 						<image href="Model_Context_Protocol_logo.svg" x="898" y="202" width="58" height="58" opacity="0.92"/>
@@ -1928,7 +1946,7 @@ def render_expenses() -> PrefabApp:
 				<section>
 					<h3>Keycloak: open-source identity server</h3>
 					<div style="margin-top: 14px; display: grid; gap: 14px; justify-items: center;">
-						<img src="screenshot_keycloak.png" alt="Keycloak website screenshot" style="width: 92%; max-height: 470px; object-fit: contain; border: 1px solid #d8cff0; border-radius: 8px; box-shadow: 0 12px 30px rgba(50, 17, 95, 0.16);">
+						<img src="screenshot_keycloak.png" alt="Keycloak website screenshot" style="width: 92%; max-height: 400px; object-fit: contain; border: 1px solid #d8cff0; border-radius: 8px; box-shadow: 0 12px 30px rgba(50, 17, 95, 0.16);">
 						<div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; font-size: 0.56em; color: #32115f;">
 							<span style="background: rgba(255,255,255,0.78); border: 1px solid #d8cff0; border-radius: 999px; padding: 8px 14px;">Runs from a Docker image</span>
 							<span style="background: rgba(255,255,255,0.78); border: 1px solid #d8cff0; border-radius: 999px; padding: 8px 14px;">Admin portal</span>
@@ -2097,7 +2115,7 @@ mcp = FastMCP("Pamela's Bakery", auth=auth)
 				center: false,
 				slideNumber: true,
 				showNotes: false,
-				margin: 0,
+				margin: 0.04,
 				preloadIframes: true,
 				autoPlayMedia: true,
 				plugins: [RevealHighlight, RevealMenu],

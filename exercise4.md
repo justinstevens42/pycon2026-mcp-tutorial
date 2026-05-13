@@ -56,7 +56,7 @@ Show me the inventory chart
 
 You should see an interactive bar chart rendered inline in the conversation:
 
-    ![Inventory chart showing bar chart of product stock levels](docs/screenshot_inventorychart.png)
+![Inventory chart showing bar chart of product stock levels](docs/screenshot_inventorychart.png)
 
 Try buying a product first, then viewing the chart again to see the updated quantities.
 

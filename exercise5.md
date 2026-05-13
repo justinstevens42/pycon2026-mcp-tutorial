@@ -20,7 +20,7 @@ Open your `servers/store_server.py` and make the following changes:
     from fastmcp.server.auth.providers.keycloak import KeycloakAuthProvider
     ```
 
-2. **Configure the auth provider** (before your tool definitions):
+2. **Configure the auth provider** (before you construct the app):
 
     ```python
     auth = KeycloakAuthProvider(
@@ -43,22 +43,22 @@ Open your `servers/store_server.py` and make the following changes:
 
 Restart your server:
 
-    ```bash
-    uv run servers/store_server.py
-    ```
+```bash
+uv run servers/store_server.py
+```
 
 Now connect from your coding agent. In VS Code, your `.vscode/mcp.json` stays the same — the URL doesn't change, but the server will now require authentication.
 
-    ```json
-    {
-        "servers": {
-        "product-store": {
-        "type": "http",
-        "url": "http://localhost:8420/mcp"
-        }
+```json
+{
+    "servers": {
+    "product-store": {
+    "type": "http",
+    "url": "http://localhost:8420/mcp"
     }
-    }
-    ```
+}
+}
+```
 
 When you ask Copilot to use the server:
 

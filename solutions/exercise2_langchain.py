@@ -1,5 +1,4 @@
 import asyncio
-import logging
 import os
 
 from dotenv import load_dotenv
@@ -42,8 +41,9 @@ async def run_agent():
             "messages": [
                 HumanMessage(
                     content=(
-                        "Consult the PrefectHQ/FastMCP Changelog and list the last 5 FastMCP "
-                        "releases with release names and one highlight each."
+                        "Consult the FastMCP Changelog and list the last 5 FastMCP "
+                        "releases with release names and one highlight each from "
+                        "PrefectHQ/fastmcp."
                     )
                 ),
             ]

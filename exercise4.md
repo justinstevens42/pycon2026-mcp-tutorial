@@ -54,7 +54,7 @@ Ask your coding agent:
 Show me the inventory chart
 ```
 
-You should see an interactive bar chart rendered inline in the conversation:
+If the agent supports MCP apps, you should see an interactive bar chart rendered inline in the conversation:
 
 ![Inventory chart showing bar chart of product stock levels](docs/screenshot_inventorychart.png)
 
@@ -108,7 +108,18 @@ async def buy_product(
     # TODO: Complete the purchase (check stock, reduce quantity, return success)
 ```
 
-When this tool runs, the host will display a confirmation dialog. The user can accept, decline, or cancel — and the tool continues based on their choice.
+
+Restart the server:
+
+```bash
+uv run servers/store_server.py
+```
+
+Ask your coding agent to purchase an available item. If the agent supports elicitations, it should display a confirmation dialog:
+
+![Dialog to confirm purchasing item](docs/screenshot_vscode_elicitation.png)
+
+You can accept, decline, or cancel, and the tool should respond based on the choice.
 
 ---
 
